@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+.Books{
+  width: 80%;
+}
+
+.books{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  
+}
+
+.book{
+  margin: 10px;
+  width: 200px;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+gap: 10px;
+}
