@@ -1,0 +1,22 @@
+CREATE TABLE Shopkeepers (
+    ShopkeeperID INT PRIMARY KEY AUTO_INCREMENT,
+    Name VARCHAR(255),
+    ShopUserName VARCHAR(255) UNIQUE,
+    Password VARCHAR(255),
+    Email VARCHAR(255),
+    PhoneNo VARCHAR(15),
+    ShopName VARCHAR(255),
+    ShopNo VARCHAR(50),
+    BankName VARCHAR(255),
+    AccountNo VARCHAR(50),
+    GSTNo VARCHAR(50),
+    GovIDType ENUM('Aadhar', 'PAN', 'Driving License', 'Voter ID') NOT NULL,
+    GovID VARCHAR(255),
+    AddressLine1 VARCHAR(100),
+    AddressLine2 VARCHAR(100),
+    City VARCHAR(50),
+    State VARCHAR(50),
+    PostalCode VARCHAR(20),
+    Country VARCHAR(50),
+    CreatedAt TIMESTAMP NOT NULL DEFAULT NOW()
+);

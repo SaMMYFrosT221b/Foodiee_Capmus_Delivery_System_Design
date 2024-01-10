@@ -1,16 +1,18 @@
 import express  from 'express';
 import cors from 'cors';
 import { getNotes,getNote,createNote,deleteNote,updateNote, checkUser,showUser,showDeliveryBoy,showShopkeeper } from './databases.js';
+import handlerUserGetRequest from './controllers/user_handler.js';
+import handlerShopkeeperGetRequest from './controllers/shopkeeper_handler.js';
+import handlerDeliveryGetRequest from './controllers/delivery_handler.js';
 
 const app = express();
 const PORT  = 5000;
 app.use(express.json());
 app.use(cors());
 
-app.get('/',(req,res)=>{
-  console.log("Hello World");
-  res.send("Hello World");
-})
+app.get('/users', handlerUserGetRequest);
+app.get('/shopkeepers', handlerShopkeeperGetRequest);
+app.get('/delivery_boys', handlerDeliveryGetRequest);
 
 // app.get('/users',  async(req, res) => {
 //   const notes = await showUser();
@@ -24,7 +26,7 @@ app.get('/',(req,res)=>{
 
 // app.get('/diliveryboys',  async(req, res) => {
 //   const notes = await showDeliveryBoy();
-//   res.send(notes);
+//   res.send(notes);`
 // });
 
 
