@@ -66,3 +66,53 @@ export async function checkUser(UserName, Password) {
   }
   return false;
 }
+
+export async function deleteUser(id) {
+  const [row] = await pool.query("DELETE FROM Users WHERE UserID = ?", [id]);
+  if(row.affectedRows){
+    return "User deletd Successfully";
+  }
+  return "User does not exist";
+}
+
+export async function updateUser(
+  Name,
+  UserName,
+  Password,
+  PhoneNo,
+  Email,
+  UserType,
+  AddressLine1,
+  AddressLine2,
+  City,
+  State,
+  PostalCode,
+  Country,
+  id
+) {
+  let sql =
+    "UPDATE Users SET Name = ?, UserName = ?, Password = ?, PhoneNo = ?, Email = ?, UserType = ?, AddressLine1 = ?, AddressLine2 = ?, City = ?, State = ?, PostalCode = ?, Country = ? WHERE UserID = ?";
+
+  let data = [
+    Name,
+    UserName,
+    Password,
+    PhoneNo,
+    Email,
+    UserType,
+    AddressLine1,
+    AddressLine2,
+    City,
+    State,
+    PostalCode,
+    Country,
+    id,
+  ];
+
+  const [row] = await pool.query(sql, data);
+  if(row.affectedRows){
+    return "User Updated Successfully";
+  }
+  return "User does not exist";
+}
+
