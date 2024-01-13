@@ -36,6 +36,41 @@ app.use("/user", userRoutes);
 app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 app.get("/rat", async (req, res) => {
   console.log("This is rat route");
   console.log(res.body);
@@ -125,21 +160,6 @@ app.put("/notes/:id", async (req, res) => {
   res.send(note);
 });
 
-app.post("/login", async (req, res) => {
-  const [result] = await checkUser(req.body.UserName, req.body.Password);
-  console.log(result["UserName"], result["Password"]);
-  if (
-    req.body.UserName == result["UserName"] &&
-    req.body.Password == result["Password"]
-  ) {
-    console.log("Login Successful");
-  } else {
-    console.log("Login Failed");
-  }
-  res.send(result);
-  // console.log("Hello");
-  // res.send("Hello");
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);

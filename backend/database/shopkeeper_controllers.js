@@ -30,7 +30,6 @@ export async function createShopkeeper(
   PostalCode,
   Country
 ) {
-
   let hashedPass = await bcrypt.hash(Password, 10);
 
   const [row] = await pool.query(
@@ -83,11 +82,12 @@ export async function getShopkeepers() {
 //     return false;
 // }
 
-
-
 export async function deleteShopkeeper(ShopkeeperID) {
-  const [row] = await pool.query("DELETE FROM Shopkeepers WHERE ShopkeeperID = ?", [ShopkeeperID]);
-  if(row.affectedRows){
+  const [row] = await pool.query(
+    "DELETE FROM Shopkeepers WHERE ShopkeeperID = ?",
+    [ShopkeeperID]
+  );
+  if (row.affectedRows) {
     return "User deletd Successfully";
   }
   return "User does not exist";
@@ -130,17 +130,14 @@ export async function updateShopkeeper(
     State,
     PostalCode,
     Country,
-    ShopkeeperID
+    ShopkeeperID,
   ];
   const [row] = await pool.query(sql, data);
-  if(row.affectedRows){
+  if (row.affectedRows) {
     return "Shopkeeper Updated Successfully";
   }
   return "Shopkeeper does not exist";
 }
-
-
-
 
 export async function checkShopkeeper(ShopUserName, GivenPassword) {
   let sql = "SELECT * FROM Shopkeepers WHERE ShopUserName = ?";
@@ -166,9 +163,27 @@ export async function checkShopkeeper(ShopUserName, GivenPassword) {
       content: "Shopkeeper Password are incorrect!",
     };
   }
-
 }
 
+// const result = await createShopkeeper(
+//   "Anant",
+//   "Anant",
+//   "123",
+//   "anant@gmail.com",
+//   "213234",
+//   "At mart",
+//   "2342",
+//   "SBI",
+//   "234234",
+//   "23423423",
+//   "PAN",
+//   "234234",
+//   "durg",
+//   "kanhar",
+//   "durg",
+//   "Chattisgarh",
+//   "23423",
+//   "India"
+// );
 
-// const result = await checkShopkeeper("test","test");
 // console.log(result);

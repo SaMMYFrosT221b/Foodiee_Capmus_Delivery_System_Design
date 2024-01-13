@@ -101,21 +101,35 @@ export async function checkDeliveryBoy(UserName, GivenPassword) {
   if (row.length == 0) {
     return {
       status: 0,
-      content: "Shopkeeper Does not exist",
+      content: "DeliveryBoy Does not exist",
     };
   }
   let checkPassword = await bcrypt.compare(GivenPassword, row[0].Password);
   if (checkPassword) {
-    console.log("Shopkeeper Verified");
+    console.log("DeliveryBoy Verified");
     return {
       status: 1,
-      content: "Shopkeeper Verified",
+      content: "DeliveryBoy Verified",
     };
   } else {
     console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
     return {
       status: -1,
-      content: "Shopkeeper Password are incorrect!",
+      content: "DeliveryBoy Password are incorrect!",
     };
   }
 }
+
+
+// const result = await createDeliveryBoy(
+//   "Shyam",
+//   "Shyam",
+//   "123",
+//   "23432432",
+//   "PAN",
+//   "234234",
+//   "UNION",
+//   "23423423"
+// )
+
+// console.log(result);
