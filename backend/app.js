@@ -16,6 +16,9 @@ import deliveryRoutes from "./routes/deliveryboy_routes.js";
 import staticRoutes from "./routes/static_routes.js";
 // import { checkRatUser } from "./database/check_user.js";
 import { checkUser } from "./database/user_controllers.js";
+import { checkShopkeeper } from "./database/shopkeeper_controllers.js";
+import { checkDeliveryBoy } from "./database/deliveryboy_controllers.js";
+
 
 // app.route
 const app = express();
@@ -42,11 +45,36 @@ app.get("/rat", async (req, res) => {
 
 app.post("/rat", async (req, res) => {
   console.log(req.body);
-  const result = await checkUser(req.body.Email, req.body.Password);
-  console.log(result);
+  if(req.body.UserType == "User"){
+    const result = await checkUser(req.body.Email, req.body.Password);
+    res.send(result);
+  }else if(req.body.UserType == "Shopkeeper"){
+    const result = await checkShopkeeper(req.body.Email, req.body.Password);
+    res.send(result);
+  }else if(req.body.UserType == "Delivery Boy"){
+    const result = await checkDeliveryBoy (req.body.Email, req.body.Password);
+    res.send(result);
+  }
+  // console.log(result);
   // res.send("This rat routes");
-  res.send(result);
 });
+
+app.post("/createRat", async (req, res) => {
+  console.log(req.body);
+  if(req.body.UserType == "User"){
+    const result = await checkUser(req.body.Email, req.body.Password);
+    res.send(result);
+  }else if(req.body.UserType == "Shopkeeper"){
+    const result = await checkShopkeeper(req.body.Email, req.body.Password);
+    res.send(result);
+  }else if(req.body.UserType == "Delivery Boy"){
+    const result = await checkDeliveryBoy (req.body.Email, req.body.Password);
+    res.send(result);
+  }
+  // console.log(result);
+  // res.send("This rat routes");
+});
+
 
 // app.get('/users',  async(req, res) => {
 //   const notes = await showUser();
@@ -65,7 +93,7 @@ app.post("/rat", async (req, res) => {
 
 app.get("/notes", async (req, res) => {
   const r = await getNotes();
-  console.log(r);
+  // console.log(r);
   const result = r;
   res.json(result);
 });

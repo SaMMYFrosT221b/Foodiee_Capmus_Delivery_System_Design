@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+import bcrypt from "bcryptjs";
 
 const pool = mysql
   .createPool({
@@ -29,12 +30,15 @@ export async function createShopkeeper(
   PostalCode,
   Country
 ) {
+
+  let hashedPass = await bcrypt.hash(Password, 10);
+
   const [row] = await pool.query(
     "INSERT INTO Shopkeepers (Name,ShopUserName,Password,Email,PhoneNo,ShopName, ShopNo, BankName,AccountNo, GSTNo, GovIDType, GovID,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
       Name,
       ShopUserName,
-      Password,
+      hashedPass,
       Email,
       PhoneNo,
       ShopName,
@@ -69,15 +73,15 @@ export async function getShopkeepers() {
   return row;
 }
 
-export async function checkShopkeeper(ShopUserName, Password){
-    const [row] = await pool.query("SELECT * FROM Shopkeepers WHERE ShopUserName = ? AND Password = ?",[ShopUserName,Password]);
+// export async function checkShopkeeper(ShopUserName, Password){
+//     const [row] = await pool.query("SELECT * FROM Shopkeepers WHERE ShopUserName = ? AND Password = ?",[ShopUserName,Password]);
 
-    let length = Object.keys(row).length;
-    if (length) {
-      return true;
-    }
-    return false;
-}
+//     let length = Object.keys(row).length;
+//     if (length) {
+//       return true;
+//     }
+//     return false;
+// }
 
 
 
@@ -134,3 +138,37 @@ export async function updateShopkeeper(
   }
   return "Shopkeeper does not exist";
 }
+
+
+
+
+export async function checkShopkeeper(ShopUserName, GivenPassword) {
+  let sql = "SELECT * FROM Shopkeepers WHERE ShopUserName = ?";
+  let data = [ShopUserName];
+  const [row] = await pool.query(sql, data);
+  if (row.length == 0) {
+    return {
+      status: 0,
+      content: "Shopkeeper Does not exist",
+    };
+  }
+  let checkPassword = await bcrypt.compare(GivenPassword, row[0].Password);
+  if (checkPassword) {
+    console.log("Shopkeeper Verified");
+    return {
+      status: 1,
+      content: "Shopkeeper Verified",
+    };
+  } else {
+    console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
+    return {
+      status: -1,
+      content: "Shopkeeper Password are incorrect!",
+    };
+  }
+
+}
+
+
+// const result = await checkShopkeeper("test","test");
+// console.log(result);

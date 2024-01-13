@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+import bcrypt from 'bcryptjs';
 
 const pool = mysql
   .createPool({
@@ -19,9 +20,11 @@ export async function createDeliveryBoy(
   BankName,
   AccountNo
 ) {
+  let hashedPass = await bcrypt.hash(Password, 10);
+
   const [row] = await pool.query(
     "INSERT INTO DeliveryBoys (UserName,Name,Password,PhoneNo,GovIDType,GovID,BankName,AccountNo ) VALUES  (?, ?, ?, ?, ?, ?, ?, ?)",
-    [UserName, Name, Password, PhoneNo, GovIDType, GovID, BankName, AccountNo]
+    [UserName, Name, hashedPass, PhoneNo, GovIDType, GovID, BankName, AccountNo]
   );
   const result = await getDeliveryBoy(row.insertId);
   return result;
@@ -40,28 +43,28 @@ export async function getDeliveryBoys() {
   return row;
 }
 
-export async function checkDeliveryBoy(UserName, Password) {
-  const [row] = await pool.query(
-    "SELECT * FROM DeliveryBoys WHERE UserName = ? AND Password = ?",
-    [UserName, Password]
-  );
-  let length = Object.keys(row).length;
-  if (length) {
-    return true;
-  }
-  return false;
-}
-
-
+// export async function checkDeliveryBoy(UserName, Password) {
+//   const [row] = await pool.query(
+//     "SELECT * FROM DeliveryBoys WHERE UserName = ? AND Password = ?",
+//     [UserName, Password]
+//   );
+//   let length = Object.keys(row).length;
+//   if (length) {
+//     return true;
+//   }
+//   return false;
+// }
 
 export async function deleteDeliveryBoy(DeliveryBoyID) {
-  const [row] = await pool.query("DELETE FROM DeliveryBoys WHERE DeliveryBoyID = ?", [DeliveryBoyID]);
-  if(row.affectedRows){
+  const [row] = await pool.query(
+    "DELETE FROM DeliveryBoys WHERE DeliveryBoyID = ?",
+    [DeliveryBoyID]
+  );
+  if (row.affectedRows) {
     return "User deletd Successfully";
   }
   return "User does not exist";
 }
-
 
 export async function updateShopkeeper(
   Name,
@@ -82,11 +85,37 @@ export async function updateShopkeeper(
     PhoneNo,
     BankName,
     AccountNo,
-    DeliveryBoyID
+    DeliveryBoyID,
   ];
   const [row] = await pool.query(sql, data);
-  if(row.affectedRows){
+  if (row.affectedRows) {
     return "Shopkeeper Updated Successfully";
   }
   return "Shopkeeper does not exist";
+}
+
+export async function checkDeliveryBoy(UserName, GivenPassword) {
+  let sql = "SELECT * FROM DeliveryBoys WHERE UserName = ?";
+  let data = [UserName];
+  const [row] = await pool.query(sql, data);
+  if (row.length == 0) {
+    return {
+      status: 0,
+      content: "Shopkeeper Does not exist",
+    };
+  }
+  let checkPassword = await bcrypt.compare(GivenPassword, row[0].Password);
+  if (checkPassword) {
+    console.log("Shopkeeper Verified");
+    return {
+      status: 1,
+      content: "Shopkeeper Verified",
+    };
+  } else {
+    console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
+    return {
+      status: -1,
+      content: "Shopkeeper Password are incorrect!",
+    };
+  }
 }

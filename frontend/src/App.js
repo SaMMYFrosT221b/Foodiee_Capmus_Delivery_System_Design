@@ -3,20 +3,21 @@ import Books from './pages/Books';
 import Update from './pages/Update';
 import Add from './pages/Add';
 import './App.css';
-import Login from './pages/Login';
-import FormComponent from './pages/Form';
+import Signup from './pages/SignupForm';
+import LoginForm from './pages/LoginForm';
+import Home from './pages/Home';
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/" element={<FormComponent />} />
+        <Route path="/" element={<Home/>} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/books" element={<Books />} />
         <Route path="/add" element={<Add />} />
         <Route path="/update/:id" element={<Update />} />
-        <Route path="/login" element={<Login />} />
       </Routes>
       </BrowserRouter>
     </div>
