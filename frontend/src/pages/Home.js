@@ -1,5 +1,6 @@
 import React  from "react"; 
 import { useNavigate } from "react-router-dom";
+import LoginPage from "./Login/LoginPage";
 
 function Home(){  
     const navigate = useNavigate();
@@ -12,11 +13,11 @@ function Home(){
     }
     
     return (
-        <div>
+        <div className="text-center text-2xl">
             <h1>This is Home Page</h1>
-            <button onClick={onClickLoginHandler}>Login</button>
-            <button onClick={onClickSignupHandler}>Signup</button>
-
+            <button className="border m-2 p-2" onClick={onClickLoginHandler}>Login</button>
+            <button className="border m-2 p-2" onClick={onClickSignupHandler}>Signup</button>
+            <LoginPage/>
         </div>
     )
 }
