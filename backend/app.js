@@ -6,7 +6,6 @@ import {
   createNote,
   deleteNote,
   updateNote,
-  checkUser,
   showUser,
   showDeliveryBoy,
   showShopkeeper,
@@ -14,7 +13,9 @@ import {
 import userRoutes from "./routes/users_routes.js";
 import shopkeeperRoutes from "./routes/shopkeeper_routes.js";
 import deliveryRoutes from "./routes/deliveryboy_routes.js";
-import staticRoutes from './routes/static_routes.js';
+import staticRoutes from "./routes/static_routes.js";
+// import { checkRatUser } from "./database/check_user.js";
+import { checkUser } from "./database/user_controllers.js";
 
 // app.route
 const app = express();
@@ -27,11 +28,25 @@ app.use(cors());
 //   res.send("Hello World");
 // });
 
-app.use('/', staticRoutes);
+app.use("/", staticRoutes);
 app.use("/user", userRoutes);
 app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);
 
+app.get("/rat", async (req, res) => {
+  console.log("This is rat route");
+  console.log(res.body);
+  // const result = await checkRatUser()
+  res.send("This is rat route");
+});
+
+app.post("/rat", async (req, res) => {
+  console.log(req.body);
+  const result = await checkUser(req.body.Email, req.body.Password);
+  console.log(result);
+  // res.send("This rat routes");
+  res.send(result);
+});
 
 // app.get('/users',  async(req, res) => {
 //   const notes = await showUser();

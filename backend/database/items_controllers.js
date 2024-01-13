@@ -34,7 +34,7 @@ export async function addItem(
     const [row] = await pool.query(sql, data);
     // const result = await showItem(row.insertId);
     console.log(`Item added successfully with ID ${row.insertId}`)
-    return row;
+    // return row;
   } catch (error) {
     console.error(`An error occurred while adding the item: ${error}`);
     throw error;
@@ -52,4 +52,18 @@ export async function showItem(ItemID) {
     throw error;
   }
 }
+
+export async function showItems(){
+  try {
+    const [row] = await pool.query("SELECT * FROM Items");
+    return row;
+  } catch (error) {
+    console.error(`An error occurred while adding the item: ${error}`);
+    throw error;
+  }
+}
+
+// const result  = await addItem(3,"Dahi Puri","Made up of dahi poori ",30,"example@.com","12min","Indian");
+const result  = await showItems();
+console.log(result);
 

@@ -1,4 +1,5 @@
 import mysql from "mysql2";
+import bcrypt from "bcryptjs";
 
 const pool = mysql
   .createPool({
@@ -23,12 +24,15 @@ export async function createUser(
   PostalCode,
   Country
 ) {
+  // Hashing the password
+  let hashedPass = await bcrypt.hash(Password, 10);
+
   const [row] = await pool.query(
     "INSERT INTO Users (Name, UserName,Password, PhoneNo, Email, UserType,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       Name,
       UserName,
-      Password,
+      hashedPass,
       PhoneNo,
       Email,
       UserType,
@@ -54,22 +58,35 @@ export async function getUsers() {
   return row;
 }
 
-export async function checkUser(UserName, Password) {
-  const [row] = await pool.query(
-    "SELECT * FROM Users WHERE UserName = ? AND Password = ?",
-    [UserName, Password]
-  );
-
-  let length = Object.keys(row).length;
-  if (length) {
-    return true;
+export async function checkUser(UserName, GivenPassword) {
+  let sql = "SELECT * FROM Users WHERE UserName = ?";
+  let data = [UserName];
+  const [row] = await pool.query(sql, data);
+  if (row.length == 0) {
+    return {
+      status: 0,
+      content: "User Does not exist",
+    };
   }
-  return false;
+  let checkPassword = await bcrypt.compare(GivenPassword, row[0].Password);
+  if (checkPassword) {
+    console.log("User Verified");
+    return {
+      status: 1,
+      content: "User Verified",
+    };
+  } else {
+    console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
+    return {
+      status: -1,
+      content: "User Password are incorrect!",
+    };
+  }
 }
 
 export async function deleteUser(id) {
   const [row] = await pool.query("DELETE FROM Users WHERE UserID = ?", [id]);
-  if(row.affectedRows){
+  if (row.affectedRows) {
     return "User deletd Successfully";
   }
   return "User does not exist";
@@ -110,9 +127,14 @@ export async function updateUser(
   ];
 
   const [row] = await pool.query(sql, data);
-  if(row.affectedRows){
+  if (row.affectedRows) {
     return "User Updated Successfully";
   }
   return "User does not exist";
 }
 
+// const result  = await createUser("adil","Adil","adil","234234","adil@adil","Customer","durg","bhilai","durg","bhilai","23423","Dubai");
+// console.log(result);
+
+// const result = await checkRatUser("Adil", "adil");
+// console.log(result);
