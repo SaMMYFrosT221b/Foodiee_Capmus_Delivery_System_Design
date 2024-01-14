@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 
+
 function LoginForm() {
   const differentHostData = {
     UserHost: "http://localhost:5000",
@@ -42,9 +43,11 @@ function LoginForm() {
       // const responseData = await axios.post("http://localhost:5000/rat", formData);
       const responseData = await response.json();
       console.log("Response from server:", responseData);
+      console.log("Ratnakar",typeof(responseData.status));
       if (responseData.status == 1) {
+        localStorage.setItem('Token', responseData.authToken);
+        console.log("This is the token: ",localStorage.getItem("Token"));
         navigate("/books");
-        console.log(responseData.content);
       } else if (responseData.status == -1) {
         navigate("/login");
         console.log(responseData.content);
@@ -55,6 +58,8 @@ function LoginForm() {
       console.error("Error sending data to server:", error);
     }
   };
+
+  console.log("This is the Token: ",localStorage.getItem("Token"));
 
   return (
     <form onSubmit={handleSubmit}>

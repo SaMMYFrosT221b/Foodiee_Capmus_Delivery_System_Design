@@ -1,12 +1,86 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import SimpleAlert from "../Alert";
 
 function LoginPage() {
+  const differentHostData = {
+    UserHost: "http://localhost:5000",
+    ShopkeeperHost: "http://localhost:6000",
+    DeliveryBoyHost: "http://localhost:7000",
+  };
+
+  const routesMappingOfUSerTypes = {
+    User: "user",
+    Shopkeeper: "shopkeeper",
+    "Delivery Boy": "deliveryboy",
+  };
+
+  const [userType, setUserType] = useState("User");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const formData = {
+      UserType: userType,
+      Email: email,
+      Password: password,
+    };
+    console.log("Form Data:", formData);
+
+    try {
+      const response = await fetch(
+        `http://localhost:5000/${
+          routesMappingOfUSerTypes[formData.UserType]
+        }/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      // const responseData = await axios.post("http://localhost:5000/rat", formData);
+      const responseData = await response.json();
+      console.log("Response from server:", responseData);
+      if (responseData.status == 1) {
+        localStorage.setItem('Token', responseData.authToken);
+        console.log("This is the token: ",localStorage.getItem("Token"));
+        alert(responseData.content);
+        console.log(responseData.content);
+        navigate("/books");
+      } else if (responseData.status == -1) {
+        navigate("/login");
+        alert(responseData.content);
+      } else {
+        alert(responseData.content);
+        console.log(responseData.content);
+      }
+    } catch (error) {
+      console.error("Error sending data to server:", error);
+    }
+  };
+
+
+  React.useEffect(() => {
+    const Token = localStorage.getItem("Token");
+    if (!Token) {
+      navigate("/");
+    }else{
+      navigate("/books");
+    }
+  }, [navigate]);
+
+
   return (
     <>
-      <div class="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-        <div class="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-          <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
+      <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+        <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
+          <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
             <div>
               <img
                 className="mx-auto"
@@ -19,43 +93,42 @@ function LoginPage() {
                 Foodiee
               </h1>
             </div>
-            <div class="mt-6 flex flex-col items-center">
-              <h1 class="text-2xl xl:text-3xl font-extrabold">Login</h1>
+            <div className="mt-6 flex flex-col items-center">
+              <h1 className="text-2xl xl:text-3xl font-extrabold">Login</h1>
 
-              <button class="mt-5 tracking-wide font-semibold bg-gray-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                <svg
-                  class="w-6 h-6 -ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+              <label className="mt-10 ">
+                User Type:
+                <select
+                  className="rounded ml-3"
+                  value={userType}
+                  onChange={(e) => setUserType(e.target.value)}
                 >
-                  <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                  <circle cx="8.5" cy="7" r="4" />
-                  <path d="M20 8v6M23 11h-6" />
-                </svg>
-                <Link to={"/login"}>
-                  <span class="ml-3">Login</span>{" "}
-                </Link>
-              </button>
+                  <option value="User">User</option>
+                  <option value="Shopkeeper">Shopkeeper</option>
+                  <option value="Delivery Boy">Delivery Boy</option>
+                </select>
+              </label>
 
-              <div class="w-full flex-1 mt-8">
-                <div class="my-5 border-b text-center"></div>
-                <div class="mx-auto max-w-xs">
+              <div className="w-full flex-1 mt-8">
+                <div className="my-5 border-b text-center"></div>
+                <div className="mx-auto max-w-xs">
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="username"
-                    placeholder="username"
+                    placeholder="Username"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
-                    class="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    type="password"
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    type="text"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button class="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <button onClick={handleSubmit} className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
                     <svg
-                      class="w-6 h-6 -ml-2"
+                      className="w-6 h-6 -ml-2"
                       fill="none"
                       stroke="currentColor"
                       stroke-width="2"
@@ -66,7 +139,7 @@ function LoginPage() {
                       <circle cx="8.5" cy="7" r="4" />
                       <path d="M20 8v6M23 11h-6" />
                     </svg>
-                    <span class="ml-3">Login</span>
+                    <span className="ml-3">Login</span>
                   </button>
                   <p className="text-center py-3">
                     Dont have account{" "}
@@ -75,22 +148,13 @@ function LoginPage() {
                     </a>
                   </p>
 
-                  <label>
-                    User Type:
-                    <select>
-                      <option value="User">User</option>
-                      <option value="Shopkeeper">Shopkeeper</option>
-                      <option value="Delivery Boy">Delivery Boy</option>
-                    </select>
-                  </label>
-
-                  <p class="mt-6 text-xs text-gray-600 text-center">
+                  <p className="mt-6 text-xs text-gray-600 text-center">
                     I agree to abide by templatana's
-                    <a href="#" class="border-b border-gray-500 border-dotted">
+                    <a href="#" className="border-b border-gray-500 border-dotted">
                       Terms of Service
                     </a>
                     and its
-                    <a href="#" class="border-b border-gray-500 border-dotted">
+                    <a href="#" className="border-b border-gray-500 border-dotted">
                       Privacy Policy
                     </a>
                   </p>

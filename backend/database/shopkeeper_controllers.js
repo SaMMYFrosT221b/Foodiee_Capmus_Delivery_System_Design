@@ -1,5 +1,8 @@
 import mysql from "mysql2";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = "anant";
 
 const pool = mysql
   .createPool({
@@ -152,9 +155,16 @@ export async function checkShopkeeper(ShopUserName, GivenPassword) {
   let checkPassword = await bcrypt.compare(GivenPassword, row[0].Password);
   if (checkPassword) {
     console.log("Shopkeeper Verified");
+    const data = {
+      user: {
+        id: row[0].ShopkeeperID,
+      },
+    };
+    const authToken = jwt.sign(data,JWT_SECRET);
     return {
       status: 1,
       content: "Shopkeeper Verified",
+      authToken: authToken
     };
   } else {
     console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
