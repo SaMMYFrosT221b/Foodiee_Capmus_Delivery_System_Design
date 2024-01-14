@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="App">
+    <div className="textCenter flex flex-col">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

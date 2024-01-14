@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -23,12 +23,12 @@ const Add = () => {
     }
   }
   return (
-<div className="form">
-      <h1>Add New Book</h1>
-      <input type="text" placeholder="title" onChange={handleChange} name="title"></input>
-      <input type="text" placeholder="conetnts" onChange={handleChange} name="contents"></input>
+<div className="text-center">
+      <h1 className="text-3xl m-3">Add New Food item</h1>
+      <input className="m-3" type="text" placeholder="Food Name" onChange={handleChange} name="title"></input>
+      <input className="m-3" type="text" placeholder="Description" onChange={handleChange} name="contents"></input>
 
-      <button className="btn" onClick={handleClick}><Link to={'/books'}>Add Note</Link></button>
+      <button className="border text-green-700 p-3" onClick={handleClick}><Link to={'/books'}>Add Food</Link></button>
     </div>
   );
 }
