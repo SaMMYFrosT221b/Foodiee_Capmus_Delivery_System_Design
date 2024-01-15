@@ -1,5 +1,5 @@
 import mysql from "mysql2";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = "anant";
@@ -13,21 +13,21 @@ const pool = mysql
   })
   .promise();
 
-export async function createDeliveryBoy(
-  UserName,
-  Name,
-  Password,
-  PhoneNo,
-  GovIDType,
-  GovID,
-  BankName,
-  AccountNo
-) {
-  let hashedPass = await bcrypt.hash(Password, 10);
+export async function createDeliveryBoy(deliveryData) {
+  let hashedPass = await bcrypt.hash(deliveryData.Password, 10);
 
   const [row] = await pool.query(
     "INSERT INTO DeliveryBoys (UserName,Name,Password,PhoneNo,GovIDType,GovID,BankName,AccountNo ) VALUES  (?, ?, ?, ?, ?, ?, ?, ?)",
-    [UserName, Name, hashedPass, PhoneNo, GovIDType, GovID, BankName, AccountNo]
+    [
+      deliveryData.UserName,
+      deliveryData.Name,
+      hashedPass,
+      deliveryData.PhoneNo,
+      deliveryData.GovIDType,
+      deliveryData.GovID,
+      deliveryData.BankName,
+      deliveryData.AccountNo,
+    ]
   );
   const result = await getDeliveryBoy(row.insertId);
   return result;
@@ -115,11 +115,11 @@ export async function checkDeliveryBoy(UserName, GivenPassword) {
         id: row[0].DeliveryBoyID,
       },
     };
-    const authToken = jwt.sign(data,JWT_SECRET);
+    const authToken = jwt.sign(data, JWT_SECRET);
     return {
       status: 1,
       content: "DeliveryBoy Verified",
-      authToken: authToken
+      authToken: authToken,
     };
   } else {
     console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
@@ -129,7 +129,6 @@ export async function checkDeliveryBoy(UserName, GivenPassword) {
     };
   }
 }
-
 
 // const result = await createDeliveryBoy(
 //   "Shyam",

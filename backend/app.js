@@ -14,10 +14,6 @@ import userRoutes from "./routes/users_routes.js";
 import shopkeeperRoutes from "./routes/shopkeeper_routes.js";
 import deliveryRoutes from "./routes/deliveryboy_routes.js";
 import staticRoutes from "./routes/static_routes.js";
-// import { checkRatUser } from "./database/check_user.js";
-import { checkUser } from "./database/user_controllers.js";
-import { checkShopkeeper } from "./database/shopkeeper_controllers.js";
-import { checkDeliveryBoy } from "./database/deliveryboy_controllers.js";
 
 
 // app.route
@@ -25,11 +21,6 @@ const app = express();
 const PORT = 5000;
 app.use(express.json());
 app.use(cors());
-
-// app.get("/", (req, res) => {
-//   console.log("Hello World");
-//   res.send("Hello World");
-// });
 
 app.use("/", staticRoutes);
 app.use("/user", userRoutes);
@@ -71,47 +62,6 @@ app.use((req, res, next) => {
 
 
 
-
-
-
-app.get("/rat", async (req, res) => {
-  console.log("This is rat route");
-  console.log(res.body);
-  // const result = await checkRatUser()
-  res.send("This is rat route");
-});
-
-app.post("/rat", async (req, res) => {
-  console.log(req.body);
-  if(req.body.UserType == "User"){
-    const result = await checkUser(req.body.Email, req.body.Password);
-    res.send(result);
-  }else if(req.body.UserType == "Shopkeeper"){
-    const result = await checkShopkeeper(req.body.Email, req.body.Password);
-    res.send(result);
-  }else if(req.body.UserType == "Delivery Boy"){
-    const result = await checkDeliveryBoy (req.body.Email, req.body.Password);
-    res.send(result);
-  }
-  // console.log(result);
-  // res.send("This rat routes");
-});
-
-app.post("/createRat", async (req, res) => {
-  console.log(req.body);
-  if(req.body.UserType == "User"){
-    const result = await checkUser(req.body.Email, req.body.Password);
-    res.send(result);
-  }else if(req.body.UserType == "Shopkeeper"){
-    const result = await checkShopkeeper(req.body.Email, req.body.Password);
-    res.send(result);
-  }else if(req.body.UserType == "Delivery Boy"){
-    const result = await checkDeliveryBoy (req.body.Email, req.body.Password);
-    res.send(result);
-  }
-  // console.log(result);
-  // res.send("This rat routes");
-});
 
 
 

@@ -12,8 +12,8 @@ function Signup() {
   };
 
   return (
-    <div className="text-center m-10">
-      <select className="m-10 text-2xl" value={selectedOption} onChange={handleOptionChange}>
+    <div className="text-center bg-gray-100">
+      <select className="m-2 text-2xl rounded" value={selectedOption} onChange={handleOptionChange}>
         <option value="">Select an option</option>
         <option value="User">User</option>
         <option value="Shopkeeper">Shopkeeper</option>
@@ -21,21 +21,21 @@ function Signup() {
       </select>
 
       {selectedOption === "User" && (
-        <div className="User text-5xl">
+        <div className="User">
           {/* Content for User div */}
           <UserSignupPage />
         </div>
       )}
 
       {selectedOption === "Shopkeeper" && (
-        <div className="Shopkeeper text-5xl">
+        <div className="Shopkeeper ">
           {/* Content for Shopkeeper div */}
           <ShopkeeperSignupPage />
         </div>
       )}
 
       {selectedOption === "DeliveryBoy" && (
-        <div className="DeliveryBoy text-5xl">
+        <div className="DeliveryBoy">
           {/* Content for DeliveryBoy div */}
           <DeliveryBoySignupPage />
         </div>

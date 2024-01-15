@@ -12,38 +12,25 @@ const pool = mysql
   })
   .promise();
 
-export async function createUser(
-  Name,
-  UserName,
-  Password,
-  PhoneNo,
-  Email,
-  UserType,
-  AddressLine1,
-  AddressLine2,
-  City,
-  State,
-  PostalCode,
-  Country
-) {
+export async function createUser(userData) {
   // Hashing the password
-  let hashedPass = await bcrypt.hash(Password, 10);
+  let hashedPass = await bcrypt.hash(userData.Password, 10);
 
   const [row] = await pool.query(
     "INSERT INTO Users (Name, UserName,Password, PhoneNo, Email, UserType,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
-      Name,
-      UserName,
+      userData.Name,
+      userData.UserName,
       hashedPass,
-      PhoneNo,
-      Email,
-      UserType,
-      AddressLine1,
-      AddressLine2,
-      City,
-      State,
-      PostalCode,
-      Country,
+      userData.PhoneNo,
+      userData.Email,
+      userData.UserType,
+      userData.AddressLine1,
+      userData.AddressLine2,
+      userData.City,
+      userData.State,
+      userData.PostalCode,
+      userData.Country,
     ]
   );
   const result = await getUser(row.insertId);

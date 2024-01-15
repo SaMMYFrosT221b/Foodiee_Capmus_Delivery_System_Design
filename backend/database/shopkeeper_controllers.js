@@ -13,49 +13,30 @@ const pool = mysql
   })
   .promise();
 
-export async function createShopkeeper(
-  Name,
-  ShopUserName,
-  Password,
-  Email,
-  PhoneNo,
-  ShopName,
-  ShopNo,
-  BankName,
-  AccountNo,
-  GSTNo,
-  GovIDType,
-  GovID,
-  AddressLine1,
-  AddressLine2,
-  City,
-  State,
-  PostalCode,
-  Country
-) {
-  let hashedPass = await bcrypt.hash(Password, 10);
+export async function createShopkeeper(shopkeeperData) {
+  let hashedPass = await bcrypt.hash(shopkeeperData.Password, 10);
 
   const [row] = await pool.query(
     "INSERT INTO Shopkeepers (Name,ShopUserName,Password,Email,PhoneNo,ShopName, ShopNo, BankName,AccountNo, GSTNo, GovIDType, GovID,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
     [
-      Name,
-      ShopUserName,
+      shopkeeperData.Name,
+      shopkeeperData.ShopUserName,
       hashedPass,
-      Email,
-      PhoneNo,
-      ShopName,
-      ShopNo,
-      BankName,
-      AccountNo,
-      GSTNo,
-      GovIDType,
-      GovID,
-      AddressLine1,
-      AddressLine2,
-      City,
-      State,
-      PostalCode,
-      Country,
+      shopkeeperData.Email,
+      shopkeeperData.PhoneNo,
+      shopkeeperData.ShopName,
+      shopkeeperData.ShopNo,
+      shopkeeperData.BankName,
+      shopkeeperData.AccountNo,
+      shopkeeperData.GSTNo,
+      shopkeeperData.GovIDType,
+      shopkeeperData.GovID,
+      shopkeeperData.AddressLine1,
+      shopkeeperData.AddressLine2,
+      shopkeeperData.City,
+      shopkeeperData.State,
+      shopkeeperData.PostalCode,
+      shopkeeperData.Country,
     ]
   );
   const result = await getShopkeeper(row.insertId);
@@ -160,11 +141,11 @@ export async function checkShopkeeper(ShopUserName, GivenPassword) {
         id: row[0].ShopkeeperID,
       },
     };
-    const authToken = jwt.sign(data,JWT_SECRET);
+    const authToken = jwt.sign(data, JWT_SECRET);
     return {
       status: 1,
       content: "Shopkeeper Verified",
-      authToken: authToken
+      authToken: authToken,
     };
   } else {
     console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");
