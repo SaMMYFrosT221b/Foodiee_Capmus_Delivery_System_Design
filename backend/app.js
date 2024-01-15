@@ -36,7 +36,10 @@ app.use("/user", userRoutes);
 app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);
 
-
+// Catch-all route
+app.use((req, res, next) => {
+  res.status(404).send('Page Not Found');
+});
 
 
 
@@ -111,20 +114,6 @@ app.post("/createRat", async (req, res) => {
 });
 
 
-// app.get('/users',  async(req, res) => {
-//   const notes = await showUser();
-//   res.send(notes);
-// });
-
-// app.get('/shopkeepers',  async(req, res) => {
-//   const notes = await showShopkeeper();
-//   res.send(notes);
-// });
-
-// app.get('/diliveryboys',  async(req, res) => {
-//   const notes = await showDeliveryBoy();
-//   res.send(notes);
-// });
 
 app.get("/notes", async (req, res) => {
   const r = await getNotes();
