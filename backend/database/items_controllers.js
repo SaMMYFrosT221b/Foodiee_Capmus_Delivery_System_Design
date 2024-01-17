@@ -9,31 +9,23 @@ const pool = mysql
   })
   .promise();
 
-export async function addItem(
-  ShopkeeperID,
-  ItemName,
-  Description,
-  Price,
-  ImageURL,
-  ExpectedTime,
-  CousineType
-) {
+export async function addItem(itemData) {
   let sql =
     "INSERT INTO Items (ShopkeeperID, ItemName, Description, Price, ImageURL, ExpectedTime, CousineType) VALUES (?, ?, ?, ?, ?, ?, ?)";
   let data = [
-    ShopkeeperID,
-    ItemName,
-    Description,
-    Price,
-    ImageURL,
-    ExpectedTime,
-    CousineType,
+    itemData.ShopkeeperID,
+    itemData.ItemName,
+    itemData.Description,
+    itemData.Price,
+    itemData.ImageURL,
+    itemData.ExpectedTime,
+    itemData.CousineType,
   ];
 
   try {
     const [row] = await pool.query(sql, data);
     // const result = await showItem(row.insertId);
-    console.log(`Item added successfully with ID ${row.insertId}`)
+    return `Item added successfully with ID ${row.insertId}`;
     // return row;
   } catch (error) {
     console.error(`An error occurred while adding the item: ${error}`);
@@ -53,7 +45,7 @@ export async function showItem(ItemID) {
   }
 }
 
-export async function showItems(){
+export async function showItems() {
   try {
     const [row] = await pool.query("SELECT * FROM Items");
     return row;
@@ -63,7 +55,19 @@ export async function showItems(){
   }
 }
 
-// const result  = await addItem(3,"Dahi Puri","Made up of dahi poori ",30,"example@.com","12min","Indian");
-const result  = await showItems();
-console.log(result);
+export async function showShopkeeperItems(shopkeeperID) {
+  try {
+    const [row] = await pool.query(
+      "SELECT * FROM Items WHERE ShopkeeperID = ?",
+      [shopkeeperID]
+    );
+    return row[0];
+  } catch (error) {
+    console.error(`An error occurred while adding the item: ${error}`);
+    throw error;
+  }
+}
 
+// const result  = await addItem(3,"Dahi Puri","Made up of dahi poori ",30,"example@.com","12min","Indian");
+// const result  = await showItems();
+// console.log(result);

@@ -43,10 +43,10 @@ export async function createShopkeeper(shopkeeperData) {
   return result;
 }
 
-export async function getShopkeeper(id) {
+export async function getShopkeeper(ShopkeeperID) {
   const [row] = await pool.query(
     "SELECT * FROM Shopkeepers WHERE ShopkeeperID = ?",
-    [id]
+    [ShopkeeperID]
   );
   return row;
 }
@@ -55,16 +55,6 @@ export async function getShopkeepers() {
   const [row] = await pool.query("SELECT * FROM Shopkeepers");
   return row;
 }
-
-// export async function checkShopkeeper(ShopUserName, Password){
-//     const [row] = await pool.query("SELECT * FROM Shopkeepers WHERE ShopUserName = ? AND Password = ?",[ShopUserName,Password]);
-
-//     let length = Object.keys(row).length;
-//     if (length) {
-//       return true;
-//     }
-//     return false;
-// }
 
 export async function deleteShopkeeper(ShopkeeperID) {
   const [row] = await pool.query(
