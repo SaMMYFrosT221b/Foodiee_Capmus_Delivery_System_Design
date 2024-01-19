@@ -9,6 +9,12 @@ const pool = mysql
   })
   .promise();
 
+// try {
+
+// } catch (error) {
+//   console.log("Cannot connect to database: SQL", error);
+// }
+
 const pool2 = mysql
   .createPool({
     host: "127.0.0.1",
@@ -99,53 +105,47 @@ export async function createShopkeeper(
 }
 
 export async function createDeliveryBoy(
-    UserName,
-    Name,
-    Password,
-    PhoneNo,
-    GovIDType,
-    GovID,
-    BankName,
-    AccountNo,
-  ) {
-    const result = await pool.query(
-      "INSERT INTO DeliveryBoys (UserName,Name,Password,PhoneNo,GovIDType,GovID,BankName,AccountNo ) VALUES  (?, ?, ?,  ?,?,?,?,?  )",
-      [
-        UserName,
-        Name,
-        Password,
-        PhoneNo,
-        GovIDType,
-        GovID,
-        BankName,
-        AccountNo,
-      ]
-    );
-    return result;
-  }
+  UserName,
+  Name,
+  Password,
+  PhoneNo,
+  GovIDType,
+  GovID,
+  BankName,
+  AccountNo
+) {
+  const result = await pool.query(
+    "INSERT INTO DeliveryBoys (UserName,Name,Password,PhoneNo,GovIDType,GovID,BankName,AccountNo ) VALUES  (?, ?, ?,  ?,?,?,?,?  )",
+    [UserName, Name, Password, PhoneNo, GovIDType, GovID, BankName, AccountNo]
+  );
+  return result;
+}
 
-  export async function showUser() {
-    const [row] = await pool.query("SELECT * FROM Users");
-    return row;
-  }
+export async function showUser() {
+  const [row] = await pool.query("SELECT * FROM Users");
+  return row;
+}
 
-  export async function checkUser(UserName, Password) {
-    const [row] = await pool.query("SELECT * FROM Users WHERE UserName = ? AND Password = ?",[UserName, Password]);
-    return row;
-  }
+export async function checkUser(UserName, Password) {
+  const [row] = await pool.query(
+    "SELECT * FROM Users WHERE UserName = ? AND Password = ?",
+    [UserName, Password]
+  );
+  return row;
+}
 
-  export async function showShopkeeper() {
-    const [row] = await pool.query("SELECT * FROM Shopkeepers");
-    return row;
-  }
+export async function showShopkeeper() {
+  const [row] = await pool.query("SELECT * FROM Shopkeepers");
+  return row;
+}
 
-  export async function showDeliveryBoy() {
-    const [row] = await pool.query("SELECT * FROM DeliveryBoys");
-    return row;
-  }
-
+export async function showDeliveryBoy() {
+  const [row] = await pool.query("SELECT * FROM DeliveryBoys");
+  return row;
+}
 
 export async function getNotes() {
+  console.log("Invoked");
   const [row] = await pool2.query("SELECT * FROM notes");
   return row;
 }
@@ -165,17 +165,23 @@ export async function createNote(title, contents) {
   return result;
 }
 
-export async function deleteNote(id){
-  const result  = await pool2.query("DELETE FROM notes WHERE id = ?",[id]);
+export async function deleteNote(id) {
+  const result = await pool2.query("DELETE FROM notes WHERE id = ?", [id]);
   console.log("Item Deleted Successfully ");
   return result;
 }
 
-export async function updateNote (id, title, contents){
-  const result = await pool2.query("UPDATE notes SET title = ?, content = ? WHERE id = ?",[title, contents, id]);
+export async function updateNote(id, title, contents) {
+  const result = await pool2.query(
+    "UPDATE notes SET title = ?, content = ? WHERE id = ?",
+    [title, contents, id]
+  );
   return result;
 }
 
 // createUser("Rat", "rat", "123", "123", "anaty@femlae", "Customer", " Durg", "Punjab", "Dubai", "Uttar", "20", "India");
 // createDeliveryBoy("Rat","Bola","123","123","Aadhar","123","SBI","123456789");
 // createShopkeeper("Sharukh","Sharukh","123","sharukh@male","123","Sharukh","123","SBI","123456789","123456789","Aadhar","123","Durg","Punjab","Dubai","Uttar","20","India");
+
+// const result = await getNotes();
+// console.log(result);

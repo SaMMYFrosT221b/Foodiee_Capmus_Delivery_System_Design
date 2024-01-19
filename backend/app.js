@@ -15,7 +15,6 @@ import shopkeeperRoutes from "./routes/shopkeeper_routes.js";
 import deliveryRoutes from "./routes/deliveryboy_routes.js";
 import staticRoutes from "./routes/static_routes.js";
 
-
 // app.route
 const app = express();
 const PORT = 5000;
@@ -29,42 +28,10 @@ app.use("/deliveryboy", deliveryRoutes);
 
 // Catch-all route
 app.use((req, res, next) => {
-  res.status(404).send('Page Not Found');
+  res.status(404).send("Page Not Found");
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*-------------------------------------------------------------------------------------------------------------- */
 app.get("/notes", async (req, res) => {
   const r = await getNotes();
   // console.log(r);
@@ -98,7 +65,6 @@ app.put("/notes/:id", async (req, res) => {
   const note = await updateNote(id, title, contents);
   res.send(note);
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
