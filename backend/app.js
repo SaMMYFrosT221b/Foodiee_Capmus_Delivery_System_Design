@@ -27,9 +27,9 @@ app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);
 
 // Catch-all route
-app.use((req, res, next) => {
-  res.status(404).send("Page Not Found");
-});
+// app.use((req, res, next) => {
+//   res.status(404).send("Page Not Found");
+// });
 
 /*-------------------------------------------------------------------------------------------------------------- */
 app.get("/notes", async (req, res) => {
