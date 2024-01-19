@@ -48,11 +48,17 @@ function LoginPage() {
       const responseData = await response.json();
       console.log("Response from server:", responseData);
       if (responseData.status == 1) {
-        localStorage.setItem('Token', responseData.authToken);
-        console.log("This is the token: ",localStorage.getItem("Token"));
+        localStorage.setItem("Token", responseData.authToken);
+        console.log("This is the token: ", localStorage.getItem("Token"));
         alert(responseData.content);
         console.log(responseData.content);
-        navigate("/books");
+        // navigate(`/books`);
+        if (formData.UserType === "User") {
+          window.location.href = "http://localhost:7000/user";
+        }
+        if (formData.UserType === "Shopkeeper") {
+          window.location.href = "http://localhost:8000/shopkeeper";
+        }
       } else if (responseData.status == -1) {
         navigate("/login");
         alert(responseData.content);
@@ -65,16 +71,14 @@ function LoginPage() {
     }
   };
 
-
   React.useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
       navigate("/");
-    }else{
+    } else {
       navigate("/books");
     }
   }, [navigate]);
-
 
   return (
     <>
@@ -126,7 +130,10 @@ function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
-                  <button onClick={handleSubmit} className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <button
+                    onClick={handleSubmit}
+                    className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
                     <svg
                       className="w-6 h-6 -ml-2"
                       fill="none"
@@ -150,11 +157,17 @@ function LoginPage() {
 
                   <p className="mt-6 text-xs text-gray-600 text-center">
                     I agree to abide by templatana's
-                    <a href="#" className="border-b border-gray-500 border-dotted">
+                    <a
+                      href="#"
+                      className="border-b border-gray-500 border-dotted"
+                    >
                       Terms of Service
                     </a>
                     and its
-                    <a href="#" className="border-b border-gray-500 border-dotted">
+                    <a
+                      href="#"
+                      className="border-b border-gray-500 border-dotted"
+                    >
                       Privacy Policy
                     </a>
                   </p>

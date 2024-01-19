@@ -1,5 +1,6 @@
 import express from "express";
 import { checkUser, createUser } from "../database/user_controllers.js";
+import { showItems } from "../database/items_controllers.js";
 
 const router = express.Router();
 
@@ -29,6 +30,11 @@ router.post("/signup", async (req, res) => {
     Country: req.body.Country,
   };
   const result = await createUser(userData);
+  return res.send(result);
+});
+
+router.get("/items", async (req, res) => {
+  const result = await showItems();
   return res.send(result);
 });
 

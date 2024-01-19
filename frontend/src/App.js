@@ -4,8 +4,8 @@ import Update from "./pages/Update";
 import Add from "./pages/Add";
 import "./App.css";
 import Signup from "./pages/SignupForm";
-import LoginForm from "./pages/LoginForm";
 import Home from "./pages/Home";
+import LoginPage from "./pages/Login/LoginPage";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/books" element={<Books />} />
           <Route path="/add" element={<Add />} />
