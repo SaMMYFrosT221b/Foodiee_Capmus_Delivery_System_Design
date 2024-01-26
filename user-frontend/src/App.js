@@ -7,7 +7,7 @@ function App() {
     <div className="textCenter flex flex-col">
       <BrowserRouter>
         <Routes>
-          <Route path="/user" element={<Items />} />
+          <Route path="/user/:id" element={<Items />} />
         </Routes>
       </BrowserRouter>
     </div>

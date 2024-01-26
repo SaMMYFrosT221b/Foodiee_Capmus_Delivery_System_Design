@@ -23,9 +23,9 @@ const Items = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("Token");
-    navigate("/user");
+    navigate("/shopkeeper");
     console.log(
-      "This is Token form local Storage:",
+      "This is the token from localStorage : ",
       localStorage.getItem("Token")
     );
   };

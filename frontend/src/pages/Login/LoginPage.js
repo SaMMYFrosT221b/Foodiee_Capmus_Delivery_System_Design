@@ -52,13 +52,13 @@ function LoginPage() {
         console.log("This is the token: ", localStorage.getItem("Token"));
         alert(responseData.content);
         console.log(responseData.content);
-        // navigate(`/books`);
-        if (formData.UserType === "User") {
-          window.location.href = "http://localhost:7000/user";
-        }
-        if (formData.UserType === "Shopkeeper") {
-          window.location.href = "http://localhost:8000/shopkeeper";
-        }
+        navigate(`/home`);
+        // if (formData.UserType === "User") {
+        //   window.location.href = `http://localhost:7000/user/${responseData.authToken}`;
+        // }
+        // if (formData.UserType === "Shopkeeper") {
+        //   window.location.href = `http://localhost:8000/shopkeeper/${responseData.authToken}`;
+        // }
       } else if (responseData.status == -1) {
         navigate("/login");
         alert(responseData.content);
@@ -74,9 +74,9 @@ function LoginPage() {
   React.useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
-      navigate("/");
+      navigate("/login");
     } else {
-      navigate("/books");
+      navigate("/home");
     }
   }, [navigate]);
 

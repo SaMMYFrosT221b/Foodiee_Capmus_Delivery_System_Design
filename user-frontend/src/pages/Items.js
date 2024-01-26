@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "../App.css";
 
 const Items = () => {
+  const { authToken } = useParams();
+  console.log("This is the rat AuthToken:", authToken);
   const [items, setItems] = useState([]);
   const navigate = useNavigate();
 
@@ -22,18 +24,24 @@ const Items = () => {
   }, []);
 
   const handleLogOut = () => {
+    console.log(
+      "This is the token from localStorage : ",
+      localStorage.getItem("Token")
+    );
     localStorage.removeItem("Token");
     navigate("/user");
     console.log(
-      "This is Token form local Storage:",
+      "This is the token from localStorage : ",
       localStorage.getItem("Token")
     );
+    // window.location.href = "http://localhost:3000/login";
   };
 
   React.useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
       navigate("/user");
+      // window.location.href = "http://localhost:3000/login";
     } else {
       navigate("/items");
     }

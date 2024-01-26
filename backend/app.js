@@ -14,6 +14,7 @@ import userRoutes from "./routes/users_routes.js";
 import shopkeeperRoutes from "./routes/shopkeeper_routes.js";
 import deliveryRoutes from "./routes/deliveryboy_routes.js";
 import staticRoutes from "./routes/static_routes.js";
+import { showItems } from "./database/items_controllers.js";
 
 // app.route
 const app = express();
@@ -30,6 +31,11 @@ app.use("/deliveryboy", deliveryRoutes);
 // app.use((req, res, next) => {
 //   res.status(404).send("Page Not Found");
 // });
+
+app.get("/items", async (req, res) => {
+  const result = await showItems();
+  res.json(result);
+});
 
 /*-------------------------------------------------------------------------------------------------------------- */
 app.get("/notes", async (req, res) => {
