@@ -7,3 +7,14 @@ CREATE TABLE LiveOrders(
     TotalAmount DECIMAL(7,2) NOT NULL,
     CreatedAt TIMESTAMP NOT NULL DEFAULT NOW()
 );
+
+-- CREATE TYPE OrderStatusEnum AS ENUM (
+--     'DRAFT',
+--     'PENDING_APPROVAL',
+--     'APPROVED',
+--     'DISAPPROVED',
+--     'PAUSED',
+--     'CANCELED',
+--     'DELETED',
+--     'UNKNOWN'
+-- );

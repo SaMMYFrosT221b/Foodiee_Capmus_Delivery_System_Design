@@ -4,10 +4,38 @@ const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "123",
+    password: "anant",
     database: "foodiee",
   })
   .promise();
+
+
+
+  // Adding a new order in LiveOrder
+  export async function addLiveOrder(liveOrder) {
+    let sql =
+      "INSERT INTO LiveOrders(ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
+    let data = [
+      liveOrder.ItemID,
+      liveOrder.UserID,
+      liveOrder.ShopkeeperID,
+      liveOrder.OrderStatus,
+      liveOrder.TotalQuantity,
+      liveOrder.TotalAmount,
+    ];
+
+  
+    try {
+      
+      const [row] = await pool.query(sql, data);
+      // const result = await showItem(row.insertId);
+      return `Congrats! Your Order is successfull! -random-number`;
+      // return row;
+    } catch (error) {
+      console.error(`An error occurred while adding the item: ${error}`);
+      throw error;
+    }
+  }
 
 export async function showLiveOrder(shopkeeperID) {
   try {

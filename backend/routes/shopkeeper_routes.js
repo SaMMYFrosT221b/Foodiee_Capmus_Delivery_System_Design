@@ -90,8 +90,8 @@ router.get("/orders-taken/:id", async (req, res) => {
 });
 
 // To show all the live order shopkeeper is having.
-router.get("live-orders/:id", async (req, res) => {
-  const shopkeeperId = req.params.id;
+router.get("live-orders/:shop_id", async (req, res) => {
+  const shopkeeperId = req.params.shop_id;
   const result = await showLiveOrder(shopkeeperId);
   return res.send(result);
 });
