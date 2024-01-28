@@ -49,8 +49,13 @@ function LoginPage() {
       console.log("Response from server:", responseData);
       if (responseData.status == 1) {
         localStorage.setItem("Token", responseData.authToken);
+        localStorage.setItem("UserID", responseData.userID);
         console.log("This is the token: ", localStorage.getItem("Token"));
-        alert(responseData.content);
+        alert(
+          responseData.content +
+            responseData.userID +
+            localStorage.getItem("UserID")
+        );
         console.log(responseData.content);
         navigate(`/home`);
         // if (formData.UserType === "User") {

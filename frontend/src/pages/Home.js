@@ -19,13 +19,15 @@ const Home = () => {
       try {
         const res = await axios.get("http://localhost:5000/items");
         setItems(res.data);
-        console.log(res);
+        console.log("This is the response form the server", res);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllNotes();
   }, []);
+
+  // console.log("Items :", items[0].ItemID);
 
   const handleDelete = async (id) => {
     try {
@@ -150,6 +152,10 @@ const Home = () => {
                       // onClick={() => setCartNumber(cartNumber + 1)}
                       onClick={() => {
                         const temp = {
+                          UserID: localStorage.getItem("UserID"),
+                          itemID: item.ItemID,
+                          ShopkeeperID: item.ShopkeeperID,
+                          OrderStatus: "Pending",
                           itemName: item.ItemName,
                           itemQuantity: 1,
                           itemPrice: item.Price,

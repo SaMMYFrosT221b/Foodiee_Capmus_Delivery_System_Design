@@ -2,6 +2,7 @@
 import { useState, useContext } from "react";
 import Navbar from "./Navbar";
 import { CartContext } from "../App";
+import axios from "axios";
 
 const Cart = () => {
   //   const cartItems = [
@@ -14,6 +15,8 @@ const Cart = () => {
   const [cart, setCart] = useState(cartItems);
   const [address, setAddress] = useState("IIT Bhilai Kutelabhata,49001");
 
+  console.log("This is cart", cart);
+
   const updateQuantity = (itemIndex, newQuantity) => {
     const updatedCart = cart.map((item, index) => {
       if (index === itemIndex) {
@@ -24,15 +27,37 @@ const Cart = () => {
     setCart(updatedCart);
   };
 
+  async function handlePlaceOrder() {
+    console.log("carts from here", cart);
+    console.log(cart.length);
+
+    const result = await axios.post(
+      "http://localhost:5000/user/add-live-orders",
+      cart,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Data ", result);
+  }
+
   const calculateTotal = () => {
-    const totalPrice = cart.reduce(
+    let totalPrice = cart.reduce(
       (total, item) => total + item.itemPrice * item.itemQuantity,
       0
     );
-    const taxes = 0.1 * totalPrice;
-    const gst = 0.05 * totalPrice;
-    const deliveryCharges = 5;
-    const finalPrice = totalPrice + taxes + gst + deliveryCharges;
+    totalPrice = totalPrice.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+    let t1 = 0.1 * totalPrice;
+    let taxes = t1.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+    let g1 = 0.05 * totalPrice;
+    let gst = g1.toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+    let deliveryCharges = 5;
+    let finalPrice =
+      Number(totalPrice) + Number(gst) + Number(taxes) + deliveryCharges;
+    // let finalPrice = f1.toFixed(2);
     return {
       totalPrice,
       taxes,
@@ -112,8 +137,11 @@ const Cart = () => {
                 Change Address
               </button>
             </div>
-            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md">
-              Make Payment
+            <button
+              onClick={handlePlaceOrder}
+              className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md"
+            >
+              Place Order
             </button>
           </div>
         </div>

@@ -14,18 +14,7 @@ import { useState } from "react";
 export const CartContext = React.createContext();
 
 function App() {
-  const [cartItems, setCartItems] = useState([
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
-  ]);
+  const [cartItems, setCartItems] = useState([]);
   return (
     <div className="textCenter flex flex-col">
       {/* <Navbar /> */}
