@@ -4,6 +4,11 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
 import Navbar from "./Navbar";
+import { useContext } from "react";
+import { CartContext } from "../App";
+import CousineFiltering from "../components/CousineFiltering";
+import AppDownload from "../components/AppDownload";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [items, setItems] = useState([]);
@@ -42,9 +47,11 @@ const Home = () => {
   }, [navigate]);
 
   const [cartNumber, setCartNumber] = useState(0);
-  const [cartItems, setCartItems] = useState([
-    { itemName: "Rat", itemQuantity: 1, itemPrice: 10 },
-  ]);
+  // const [cartItems, setCartItems] = useState([
+  //   { itemName: "Rat", itemQuantity: 1, itemPrice: 10 },
+  // ]);
+
+  const { cartItems } = useContext(CartContext);
 
   function checkItem(itemComponent) {
     let rat = false;
@@ -99,35 +106,14 @@ const Home = () => {
     <>
       <Navbar cartNumber={cartNumber} cartItems={cartItems} />
       <div className="Books text-center">
-        <h1 className="text-3xl underline m-10">Sammy Foods Store</h1>
-        {/* <div className="books flex flex-wrap justify-center ">
-        {items.map((item) => (
-          <div className="book  m-5 w-[200px] border p-5" key={item.ItemID}>
-            <h3 className="m-2 text-blue-500">{item.ItemName}</h3>
-            <p className="m-2 text-green-500">{item.Description}</p>
-            <p className="m-2 text-green-500">{item.Price}</p>
-            <button
-              className="delete m-3 text-red-400 border p-2"
-              onClick={() => {
-                handleDelete(item.ItemID);
-              }}
-            >
-              Delete
-            </button>
-            <button className="update text-gray-500 border p-2">
-              {" "}
-              <Link to={`/update/${item.ItemID}`}>Update</Link>
-            </button>
-          </div>
-        ))}
-      </div> */}
-        <button className="btn border p-3 bg-green-400">
+        <h1 className="text-3xl underline m-10">Foodiee Store</h1>
+        {/* <button className="btn border p-3 bg-green-400">
           <Link to={"/add"}>Add New Notes</Link>
-        </button>
+        </button> */}
 
-        <div className="books flex flex-wrap justify-center ">
+        <div className="books flex flex-wrap justify-center">
           {items.map((item) => (
-            <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-lg mt-10">
+            <div className="max-w-md mx-auto bg-white rounded-xl overflow-hidden shadow-lg ml-5">
               <img
                 className="w-full h-48 object-cover"
                 // src="restaurant.jpg"
@@ -215,6 +201,9 @@ const Home = () => {
           </div>;
         })}
       </div> */}
+        <CousineFiltering />
+        <AppDownload />
+        <Footer />
       </div>
     </>
   );

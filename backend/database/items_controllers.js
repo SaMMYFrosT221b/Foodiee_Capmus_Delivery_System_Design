@@ -68,14 +68,14 @@ export async function showShopkeeperItems(shopkeeperID) {
   }
 }
 
-const result = await addItem(
-  5,
-  "Burger",
-  "Made up of best gurger ",
-  40,
-  "",
-  "12min",
-  "Indian"
-);
-// const result  = await showItems();
-console.log(result);
+// const result = await addItem(
+//   5,
+//   "Burger",
+//   "Made up of best gurger ",
+//   40,
+//   "",
+//   "12min",
+//   "Indian"
+// );
+// // const result  = await showItems();
+// console.log(result);

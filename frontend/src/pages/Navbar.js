@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-// import Image from "next/image";
+import { useEffect, useState } from "react";
+import React from "react";
 import { FaLocationArrow } from "react-icons/fa6";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdAccountCircle } from "react-icons/md";
 import { RiShoppingCart2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CartContext } from "../App";
+// import {} from  "../App"
 
 function Navbar({ cartNumber, cartItems }) {
   //   const [cartNumber, setCartNumber] = useState(0);
@@ -76,17 +79,24 @@ function Navbar({ cartNumber, cartItems }) {
         <span>
           {/* <button id="cart" onClick={() => setCartNumber(cartNumber + 1)}> */}
           <button>
-            <spam>
-              <RiShoppingCart2Line />
-              <div className="App relative">
-                <a
-                  href="#"
+            <spam className="flex">
+              <RiShoppingCart2Line size={32} className="flex ml-5 " />
+              <div className="App relative ml-5 mr-5">
+                {/* <a
+                  href="/home/cart"
                   onMouseEnter={() => setIsHovered(true)}
                   onMouseLeave={() => setIsHovered(false)}
-                  className="text-blue-500 hover:text-blue-800"
+                  className="text-blue-500 hover:text-blue-800 text-2xl"
                 >
                   Cart: {cartNumber}
-                </a>
+                </a> */}
+                <Link
+                  className="text-blue-500 hover:text-blue-800 text-2xl"
+                  to="/home/cart"
+                >
+                  Cart: {cartNumber}
+                </Link>
+
                 {isHovered && (
                   <div
                     className="absolute bg-white text-black border border-gray-200 p-2 mt-2 rounded shadow-lg"

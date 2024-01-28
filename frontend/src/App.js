@@ -7,20 +7,40 @@ import Signup from "./pages/SignupForm";
 // import Home from "./pages/Home";
 import LoginPage from "./pages/Login/LoginPage";
 import Navbar from "./pages/Navbar";
+import Cart from "./pages/Cart";
+import React from "react";
+import { useState } from "react";
+
+export const CartContext = React.createContext();
 
 function App() {
+  const [cartItems, setCartItems] = useState([
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+    { itemName: "Dahi Gupchup", itemQuantity: 1, itemPrice: 30 },
+  ]);
   return (
     <div className="textCenter flex flex-col">
       {/* <Navbar /> */}
       <BrowserRouter>
-        <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/update/:id" element={<Update />} />
-        </Routes>
+        <CartContext.Provider value={{ cartItems, setCartItems }}>
+          <Routes>
+            {/* <Route path="/" element={<Home />} /> */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/add" element={<Add />} />
+            <Route path="/home/cart" element={<Cart />} />
+            <Route path="/update/:id" element={<Update />} />
+          </Routes>
+        </CartContext.Provider>
       </BrowserRouter>
     </div>
   );
