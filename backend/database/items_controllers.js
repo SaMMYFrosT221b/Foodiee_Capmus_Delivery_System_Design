@@ -28,15 +28,15 @@ export async function addItem(itemData) {
     const [checkIfAlready] = await pool.query('SELECT * FROM Items WHERE ItemName = ?', [itemData.ItemName]);
     // If there is at least one row, the item already exists
     if (checkIfAlready.length > 0) {
-      return "Item already exists";
+      return [403,"Item already exists"];
     }
     const [row] = await pool.query(sql, data);
     // const result = await showItem(row.insertId);
-    return `Item added successfully with ID ${row.insertId}`;
+    return [200,`Item added successfully with ID ${row.insertId}`];
     // return row;
   } catch (error) {
     console.error(`An error occurred while adding the item: ${error}`);
-    throw error;
+    return [400,error];
   }
 }
 

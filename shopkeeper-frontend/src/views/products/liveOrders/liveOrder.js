@@ -33,10 +33,9 @@ import { DocsExample } from 'src/components';
     const items = fetch(`http://localhost:5000/shopkeeper/catalogue/1`);
     console.log(items);
 */
-const Tables = () => {
+const liveOrders = () => {
 
     const [data, setdata] = useState([]);
-    
     useEffect(() => {
         // this variable is local to the effect, and will be set to true when the effect is cleaned up
         let ignore = false;
@@ -44,7 +43,7 @@ const Tables = () => {
         (async () => {
             try {
                 // Fetch data from the new URL
-                const response = await fetch('http://localhost:5000/shopkeeper/catalogue/1');
+                const response = await fetch('http://localhost:5000/shopkeeper/live-orders/1');
 
                 if (!response.ok) {
                     // Handle non-successful response (optional)
@@ -75,26 +74,22 @@ const Tables = () => {
             <CCol xs={12}>
                 <CCard className="mb-4">
                     <CCardHeader>
-                        <strong>Catalogue </strong> <small>username</small>
+                        <strong>LiveOrders </strong> <small>username</small>
                     </CCardHeader>
                     <CCardBody>
                         <p className="text-medium-emphasis small">
-                            You have added the following items to Our Foodie App.
+                            Please accept the pending request.
                         </p>
                         <CTable>
                             <CTableHead>
                                 <CTableRow>
-                                    <CTableHeaderCell scope="col">
-                                    <CIcon icon={icon.cilFastfood} size="sm"/>ItemName</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Description</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">
-                                    <CIcon icon={icon.cilMoney} size="sm"/>
-                                        Price
-                                        </CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">
-                                    <CIcon icon={icon.cilAvTimer} size="sm"/>ExpectedTime</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">
-                                    <CIcon icon={icon.cifIn} size="sm"/>CousineType</CTableHeaderCell>
+                                    {/* <CTableHeaderCell scope="col">ShopkeeperID</CTableHeaderCell> */}
+                                    <CTableHeaderCell scope="col">ItemID</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">UserID</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">TotalQuantity</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">TotalAmount</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">OrderStatus</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Action</CTableHeaderCell>
                                 </CTableRow>
                             </CTableHead>
 
@@ -103,23 +98,27 @@ const Tables = () => {
                                     // console.log(item);
                                     return (
                                         <CTableRow key={item.ItemID} color="secondary">
-                                            <CTableHeaderCell scope="row">{item.ItemName}</CTableHeaderCell>
-                                            <CTableDataCell>{item.Description.slice(0,20)+".. "}   
-                                            <CPopover
-                                                title="Description"
-                                                content={item.Description}
-                                                placement="right"
-                                            >
-                                                <CButton color="primary" size="sm">
-                                                    Details
-                                                </CButton>
-                                            </CPopover>
+
+                                            <CTableHeaderCell scope="row">{item.ItemID}</CTableHeaderCell>
+                                            <CTableHeaderCell scope="row">{item.UserID}</CTableHeaderCell>
+                                            <CTableDataCell>{item.TotalQuantity}
+                                            </CTableDataCell>
+                                            <CTableDataCell>{item.TotalAmount}</CTableDataCell>
+                                            <CTableDataCell>
+                                            <CBadge color="warning">{item.OrderStatus}</CBadge>
                                             </CTableDataCell>
                                             <CTableDataCell>
-                                            <CBadge color="success">{item.Price}</CBadge></CTableDataCell>
-                                            <CTableDataCell><CBadge color="dark">{item.ExpectedTime}</CBadge></CTableDataCell>
-                                            <CTableDataCell>{item.CousineType}</CTableDataCell>
-                                            
+                                                <button class="btn btn-success mx-2" type="button">
+                                                <CIcon icon={icon.cilCheck} size="sm"/>
+                                                </button>
+                                                <button class="btn btn-danger" type="button">
+                                                <CIcon icon={icon.cilTrash} size="sm"/>
+                                                </button>
+                                                
+                                                
+                                                
+                                            </CTableDataCell>
+
                                         </CTableRow>
                                     )
                                 })}
@@ -139,4 +138,4 @@ const Tables = () => {
     )
 }
 
-export default Tables
+export default liveOrders

@@ -28,20 +28,6 @@ const _nav = [
   },
   {
     component: CNavGroup,
-    name: 'Base',
-    to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
-    items: [
-
-      {
-        component: CNavItem,
-        name: 'Tables',
-        to: '/base/tables',
-      },
-    ]
-  },
-  {
-    component: CNavGroup,
     name: 'Products',
     to: '/products',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
@@ -55,6 +41,11 @@ const _nav = [
         component: CNavItem,
         name: 'addNewProduct',
         to: '/products/addNewProduct',
+      },
+      {
+        component: CNavItem,
+        name: 'LiveOrders',
+        to: '/products/liveOrders',
       },
     ],
   },

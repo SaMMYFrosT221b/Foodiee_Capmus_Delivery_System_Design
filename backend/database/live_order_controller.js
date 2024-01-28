@@ -43,10 +43,12 @@ export async function showLiveOrder(shopkeeperID) {
       "SELECT * FROM LiveOrders WHERE ShopkeeperID = ?",
       [shopkeeperID]
     );
-    return row[0];
+    // console.log(row);
+    return row;
   } catch (error) {
-    console.error(`An error occurred while adding the item: ${error}`);
-    throw error;
+    console.error(`An error occurred while fetching the item: ${error}`);
+    // throw error;
+    return "Error Found"
   }
 }
 

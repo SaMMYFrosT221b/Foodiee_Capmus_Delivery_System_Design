@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   CCard,
   CCardBody,
@@ -13,6 +13,7 @@ import {
   CTableHeaderCell,
   CTableRow,
 } from '@coreui/react'
+
 import axios from 'axios';
 /*
 "ItemName": "Maggi",
@@ -24,64 +25,41 @@ import axios from 'axios';
     const items = fetch(`http://localhost:5000/shopkeeper/catalogue/1`);
     console.log(items);
 */
-const Tables = async() => {
-  // const shopID = 1;
+const Tables = () => {
 
- async function getUpdatedData  (){
-    const data = await axios("http://localhost:5000/shopkeeper/catalogue/1");
-    return data.data;
-  }
+  const [data, setdata] = useState([]);
+  useEffect(() => {
+    // this variable is local to the effect, and will be set to true when the effect is cleaned up
+    let ignore = false;
 
-  let rat = [{
-    "ItemName": "MAggie",
-    "Description": "Love it",
-    "Price": 10,
-    "ExpectedTime": 20,
-    "CousineType": "India"
-  }, {
-    "ItemName": "MAggie",
-    "Description": "Love it",
-    "Price": 10,
-    "ExpectedTime": 20,
-    "CousineType": "India"
-  }, {
-    "ItemName": "MAggie",
-    "Description": "Love it",
-    "Price": 10,
-    "ExpectedTime": 20,
-    "CousineType": "India"
-  }, {
-    "ItemName": "MAggie",
-    "Description": "Love it",
-    "Price": 10,
-    "ExpectedTime": 20,
-    "CousineType": "India"
-  }, {
-    "ItemName": "MAggie",
-    "Description": "Love it",
-    "Price": 10,
-    "ExpectedTime": 20,
-    "CousineType": "India"
-  }]
-  // const [data, setData] = useState(rat);
+    (async () => {
+      try {
+        // Fetch data from the new URL
+        const response = await fetch('http://localhost:5000/shopkeeper/catalogue/1');
 
-  // const [details, setDetails] = useState([])
+        if (!response.ok) {
+          // Handle non-successful response (optional)
+          console.error(`Error fetching data: ${response.statusText}`);
+          return;
+        }
 
-  
-  // const items = getUpdatedData();
-  // console.log("rat",items);
-  
-  const data = await axios("http://localhost:5000/shopkeeper/catalogue/1");
-  const [hello,setHello] = useState([{}]);
-  console.log("Length",Object.keys(data))
-  if(Object.keys(data)){
-    let items = [];
-    for(let i = 0;i<Object.keys(data);i++){
-      temp.push(data[i]);
-    }
-    setHello(items);
-    console.log("RAT", hello);
-  }
+        // Assuming response.json() returns the data you need
+        const fetched_data = await response.json();
+        if (!ignore) {
+          setdata(fetched_data);
+        }
+      } catch (error) {
+        // Handle errors during the fetch (optional)
+        console.error('Error fetching data:', error);
+      }
+    })();
+
+    return () => {
+      // on cleanup, prevent the setIsRead(true) call from happening
+      ignore = true;
+    };
+  }, []);
+
 
   return (
     <CRow>
@@ -106,10 +84,10 @@ const Tables = async() => {
               </CTableHead>
 
               <CTableBody>
-                {hello.map((item, index) => {
-                  console.log(item);
+                {data.map((item, index) => {
+                  // console.log(item);
                   return (
-                    <CTableRow color="success">
+                    <CTableRow key={item.ItemID} color="success">
                       <CTableHeaderCell scope="row">{item.ItemName}</CTableHeaderCell>
                       <CTableDataCell>{item.Description}</CTableDataCell>
                       <CTableDataCell>{item.Price}</CTableDataCell>

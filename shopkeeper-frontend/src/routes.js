@@ -51,6 +51,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 // Products 
 const allProduct = React.lazy(() => import('./views/products/allProduct/index'))
 const addNewProduct = React.lazy(() => import('./views/products/addNewProduct/index'))
+const liveOrders = React.lazy(()=> import('./views/products/liveOrders/liveOrder'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
@@ -101,6 +102,7 @@ const routes = [
   { path: '/products', name: 'Products', element: allProduct, exact: true },
   { path: '/products/allProduct', name: 'allProduct', element: allProduct },
   { path: '/products/addNewProduct', name: 'addNewProduct', element: addNewProduct },
+  { path: '/products/liveOrders', name: 'liveOrders', element: liveOrders },
   { path: '/widgets', name: 'Widgets', element: Widgets },
 ]
 

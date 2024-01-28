@@ -69,7 +69,7 @@ router.post("/add-item", async (req, res) => {
     CousineType: req.body.CousineType,
   };
   const result = await addItem(itemData);
-  return res.send(result);
+  return res.status(result[0]).send(result[1]);
 });
 
 // To show all the items shopkeeper has added to his shop.
@@ -78,6 +78,14 @@ router.get("/catalogue/:id", async (req, res) => {
   const result = await showShopkeeperItems(shopkeeperId);
   return res.send(result);
 });
+
+// To show all the live order shopkeeper is having.
+router.get("/live-orders/:id", async (req, res) => {
+  const shopkeeperId = req.params.id;
+  const result = await showLiveOrder(shopkeeperId);
+  return res.send(result);
+});
+
 
 // To show all the order shopkeeper has taken till now.
 router.get("/orders-taken/:id", async (req, res) => {
@@ -89,12 +97,6 @@ router.get("/orders-taken/:id", async (req, res) => {
   return res.send(result);
 });
 
-// To show all the live order shopkeeper is having.
-router.get("live-orders/:shop_id", async (req, res) => {
-  const shopkeeperId = req.params.shop_id;
-  const result = await showLiveOrder(shopkeeperId);
-  return res.send(result);
-});
 
 // To delete the live order
 router.get("delete-live-orders/:id", async (req, res) => {
