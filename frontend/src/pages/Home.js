@@ -152,7 +152,7 @@ const Home = () => {
                       // onClick={() => setCartNumber(cartNumber + 1)}
                       onClick={() => {
                         const temp = {
-                          UserID: localStorage.getItem("UserID"),
+                          UserID: localStorage['UserID'],
                           itemID: item.ItemID,
                           ShopkeeperID: item.ShopkeeperID,
                           OrderStatus: "Pending",

@@ -66,6 +66,19 @@ const _nav = [
       },
     ],
   },
+  {
+    component: CNavGroup,
+    name: 'Profiles',
+    icon: <CIcon icon={cilStar} customClassName="nav-icon" />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Profile',
+        to: '/profiles',
+      },
+      
+    ],
+  },
 ]
 
 export default _nav

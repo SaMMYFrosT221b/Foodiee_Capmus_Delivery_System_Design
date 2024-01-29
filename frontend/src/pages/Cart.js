@@ -28,6 +28,7 @@ const Cart = () => {
   };
 
   async function handlePlaceOrder() {
+    console.log("This is localStorage USERID: ",localStorage.getItem("UserID"))
     console.log("carts from here", cart);
     console.log(cart.length);
 

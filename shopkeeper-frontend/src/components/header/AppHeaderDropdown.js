@@ -21,10 +21,25 @@ import {
   cilUser,
 } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
+import { Link } from 'react-router-dom'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
+
+  const isLoggedIn = !!localStorage.getItem('token');
+
+  if (!isLoggedIn) {
+    return (
+      <CDropdown variant="nav-item">
+        <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
+          <div>
+            <span><Link to="/login" className="text-danger">LogIn</Link></span> or <Link to="/register" className="text-danger">Register</Link> to Continue
+          </div>
+        </CDropdownToggle>
+      </CDropdown>
+    );
+  }
   return (
     <CDropdown variant="nav-item">
       <CDropdownToggle placement="bottom-end" className="py-0" caret={false}>
@@ -84,9 +99,9 @@ const AppHeaderDropdown = () => {
           </CBadge>
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="#">
+        <CDropdownItem onClick={localStorage.clear()}>
           <CIcon icon={cilLockLocked} className="me-2" />
-          Lock Account
+          LogOut
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

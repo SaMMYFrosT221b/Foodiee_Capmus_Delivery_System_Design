@@ -14,7 +14,7 @@ const pool = mysql
   // Adding a new order in LiveOrder
   export async function addLiveOrder(liveOrder) {
     let sql =
-      "INSERT INTO LiveOrders(ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
     let data = [
       liveOrder.ItemID,
       liveOrder.UserID,
@@ -39,7 +39,7 @@ const pool = mysql
 export async function addLiveOrders(liveOrderDetails) {
   try {
     const sql =
-      "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
+      "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
     const data = [
       liveOrderDetails.itemID,
       liveOrderDetails.UserID,
@@ -49,6 +49,7 @@ export async function addLiveOrders(liveOrderDetails) {
       liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
     ];
     const [row] = await pool.query(sql, data);
+    console.log("Live order added Successfully");
     return row;
   } catch (err) {
     return err;
