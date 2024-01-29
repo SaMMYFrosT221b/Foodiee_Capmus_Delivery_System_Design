@@ -28,10 +28,18 @@ The Campus Delivery System is a food delivery service designed specifically for 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+1) git clone https://github.com/SaMMYFrosT221b/Foodiee_Capmus_Delivery_System_Design.git
 
 ### Prerequisites
 
 What things you need to install the software and how to install them.
+cd frontend
+    1) npm i
+    2) npm start
+
+cd backend
+    1) npm i
+    2) node database.js
 
 ### Installing
 

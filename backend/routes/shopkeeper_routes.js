@@ -9,7 +9,8 @@ import {
   deleteLiveOrder,
   showLiveOrder,
 } from "../database/live_order_controller.js";
-import { showOrder } from "../database/orders_controller.js";
+import { showOrder,updateOrder } from "../database/orders_controller.js";
+
 
 const router = express.Router();
 
@@ -69,7 +70,7 @@ router.post("/add-item", async (req, res) => {
     CousineType: req.body.CousineType,
   };
   const result = await addItem(itemData);
-  return res.send(result);
+  return res.status(result[0]).send(result[1]);
 });
 
 // To show all the items shopkeeper has added to his shop.
@@ -78,6 +79,14 @@ router.get("/catalogue/:id", async (req, res) => {
   const result = await showShopkeeperItems(shopkeeperId);
   return res.send(result);
 });
+
+// To show all the live order shopkeeper is having.
+router.get("/live-orders/:id", async (req, res) => {
+  const shopkeeperId = req.params.id;
+  const result = await showLiveOrder(shopkeeperId);
+  return res.send(result);
+});
+
 
 // To show all the order shopkeeper has taken till now.
 router.get("/orders-taken/:id", async (req, res) => {
@@ -89,12 +98,16 @@ router.get("/orders-taken/:id", async (req, res) => {
   return res.send(result);
 });
 
-// To show all the live order shopkeeper is having.
-router.get("live-orders/:id", async (req, res) => {
+// To show all the order shopkeeper has taken till now.
+router.put("/update-order-status/:id", async (req, res) => {
   const shopkeeperId = req.params.id;
-  const result = await showLiveOrder(shopkeeperId);
+  const result = await updateOrder(shopkeeperId,req.body);
+  if (result.length == 0) {
+    return res.send("No orders Updated!");
+  }
   return res.send(result);
 });
+
 
 // To delete the live order
 router.get("delete-live-orders/:id", async (req, res) => {

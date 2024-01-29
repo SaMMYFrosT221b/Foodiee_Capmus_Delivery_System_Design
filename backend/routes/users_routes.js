@@ -1,13 +1,13 @@
-import express from "express";
+import express, { json } from "express";
 import { checkUser, createUser } from "../database/user_controllers.js";
 import { showItems } from "../database/items_controllers.js";
-import { addLiveOrder } from "../database/live_order_controller.js";
+import { addLiveOrders } from "../database/live_order_controller.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
   console.log("This is user routes");
-  return res.send("This is user routes");
+  return res.status(200).send({message: "This is user routes"});
 });
 
 router.post("/login", async (req, res) => {
@@ -30,7 +30,23 @@ router.post("/signup", async (req, res) => {
     PostalCode: req.body.PostalCode,
     Country: req.body.Country,
   };
+  
   const result = await createUser(userData);
+  return res.send(result);
+});
+
+// To add in live order (placeOrder)
+router.post("/place-order", async (req, res) => {
+  const itemData = {
+    ItemID:req.body.ItemID,
+    UserID:req.body.UserID,
+    ShopkeeperID:req.body.ShopkeeperID,
+    OrderStatus:req.body.OrderStatus,
+    TotalQuantity:req.body.TotalQuantity,
+    TotalAmount:req.body.TotalAmount,
+  };
+
+  const result = await addLiveOrder(itemData);
   return res.send(result);
 });
 
@@ -40,7 +56,7 @@ router.get("/items", async (req, res) => {
 });
 
 router.post("/add-live-orders", async (req, res) => {
-  console.log("This is cart req body", typeof req.body);
+  console.log("This is cart req body", req.body);
   const liveOrderData = req.body;
   // console.log(liveOrderData.length);
   if (liveOrderData.length == 0) {
@@ -48,7 +64,7 @@ router.post("/add-live-orders", async (req, res) => {
   }
 
   for (let i = 0; i < liveOrderData.length; i++) {
-    const result = await addLiveOrder(liveOrderData[i]);
+    const result = await addLiveOrders(liveOrderData[i]);
   }
   return res.send("add-live-order INVOKED");
   // const liveOrderData = {

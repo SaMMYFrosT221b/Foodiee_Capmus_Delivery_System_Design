@@ -4,15 +4,42 @@ const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "123",
+    password: "anant",
     database: "foodiee",
   })
   .promise();
 
-export async function addLiveOrder(liveOrderDetails) {
+
+
+  // Adding a new order in LiveOrder
+  export async function addLiveOrder(liveOrder) {
+    let sql =
+      "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
+    let data = [
+      liveOrder.ItemID,
+      liveOrder.UserID,
+      liveOrder.ShopkeeperID,
+      liveOrder.OrderStatus,
+      liveOrder.TotalQuantity,
+      liveOrder.TotalAmount,
+    ];
+
+  
+    try {
+      
+      const [row] = await pool.query(sql, data);
+      // const result = await showItem(row.insertId);
+      return `Congrats! Your Order is successfull! -random-number`;
+      // return row;
+    } catch (error) {
+      console.error(`An error occurred while adding the item: ${error}`);
+      throw error;
+    }
+  }
+export async function addLiveOrders(liveOrderDetails) {
   try {
     const sql =
-      "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
+      "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
     const data = [
       liveOrderDetails.itemID,
       liveOrderDetails.UserID,
@@ -22,6 +49,7 @@ export async function addLiveOrder(liveOrderDetails) {
       liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
     ];
     const [row] = await pool.query(sql, data);
+    console.log("Live order added Successfully");
     return row;
   } catch (err) {
     return err;
@@ -34,10 +62,12 @@ export async function showLiveOrder(shopkeeperID) {
       "SELECT * FROM LiveOrders WHERE ShopkeeperID = ?",
       [shopkeeperID]
     );
-    return row[0];
+    // console.log(row);
+    return row;
   } catch (error) {
-    console.error(`An error occurred while adding the item: ${error}`);
-    throw error;
+    console.error(`An error occurred while fetching the item: ${error}`);
+    // throw error;
+    return "Error Found"
   }
 }
 

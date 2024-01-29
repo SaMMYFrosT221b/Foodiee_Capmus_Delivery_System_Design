@@ -19,6 +19,7 @@ function LoginPage() {
   const [userType, setUserType] = useState("User");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -32,8 +33,7 @@ function LoginPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/${
-          routesMappingOfUSerTypes[formData.UserType]
+        `http://localhost:5000/${routesMappingOfUSerTypes[formData.UserType]
         }/login`,
         {
           method: "POST",
@@ -72,7 +72,10 @@ function LoginPage() {
         console.log(responseData.content);
       }
     } catch (error) {
+      setError('Error 505 Server Side.');
       console.error("Error sending data to server:", error);
+
+      // Server Side Error 
     }
   };
 
@@ -119,6 +122,7 @@ function LoginPage() {
               </label>
 
               <div className="w-full flex-1 mt-8">
+                {error && <p className="text-red-500">{error}</p>}
                 <div className="my-5 border-b text-center"></div>
                 <div className="mx-auto max-w-xs">
                   <input

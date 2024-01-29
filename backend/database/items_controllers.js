@@ -1,10 +1,11 @@
+import { response } from "express";
 import mysql from "mysql2";
 
 const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "123",
+    password: "anant",
     database: "foodiee",
   })
   .promise();
@@ -21,15 +22,21 @@ export async function addItem(itemData) {
     itemData.ExpectedTime,
     itemData.CousineType,
   ];
+  
 
   try {
+    const [checkIfAlready] = await pool.query('SELECT * FROM Items WHERE ItemName = ?', [itemData.ItemName]);
+    // If there is at least one row, the item already exists
+    if (checkIfAlready.length > 0) {
+      return [403,"Item already exists"];
+    }
     const [row] = await pool.query(sql, data);
     // const result = await showItem(row.insertId);
-    return `Item added successfully with ID ${row.insertId}`;
+    return [200,`Item added successfully with ID ${row.insertId}`];
     // return row;
   } catch (error) {
     console.error(`An error occurred while adding the item: ${error}`);
-    throw error;
+    return [400,error];
   }
 }
 
@@ -61,7 +68,7 @@ export async function showShopkeeperItems(shopkeeperID) {
       "SELECT * FROM Items WHERE ShopkeeperID = ?",
       [shopkeeperID]
     );
-    return row[0];
+    return row;
   } catch (error) {
     console.error(`An error occurred while adding the item: ${error}`);
     throw error;
