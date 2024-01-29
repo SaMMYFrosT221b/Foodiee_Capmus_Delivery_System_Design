@@ -36,6 +36,24 @@ const pool = mysql
       throw error;
     }
   }
+export async function addLiveOrders(liveOrderDetails) {
+  try {
+    const sql =
+      "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
+    const data = [
+      liveOrderDetails.itemID,
+      liveOrderDetails.UserID,
+      liveOrderDetails.ShopkeeperID,
+      liveOrderDetails.OrderStatus,
+      liveOrderDetails.itemQuantity,
+      liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
+    ];
+    const [row] = await pool.query(sql, data);
+    return row;
+  } catch (err) {
+    return err;
+  }
+}
 
 export async function showLiveOrder(shopkeeperID) {
   try {

@@ -1,7 +1,7 @@
 import mysql from "mysql2";
 import bcrypt from "bcryptjs";
 const JWT_SECRET = "anant";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 
 const pool = mysql
   .createPool({
@@ -75,11 +75,12 @@ export async function checkUser(UserName, GivenPassword) {
         id: row[0].UserID,
       },
     };
-    const authToken = jwt.sign(data,JWT_SECRET);
+    const authToken = jwt.sign(data, JWT_SECRET);
     return {
       status: 1,
+      userID: row[0].UserID,
       content: "User Verified",
-      authToken:authToken
+      authToken: authToken,
     };
   } else {
     console.log("Hacker! Back Up Soldier Fire in the Hole!!!! ");

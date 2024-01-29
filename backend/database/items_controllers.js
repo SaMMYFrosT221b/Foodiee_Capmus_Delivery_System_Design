@@ -75,6 +75,14 @@ export async function showShopkeeperItems(shopkeeperID) {
   }
 }
 
-// const result  = await addItem(3,"Dahi Puri","Made up of dahi poori ",30,"example@.com","12min","Indian");
-// const result  = await showItems();
+// const result = await addItem(
+//   5,
+//   "Burger",
+//   "Made up of best gurger ",
+//   40,
+//   "",
+//   "12min",
+//   "Indian"
+// );
+// // const result  = await showItems();
 // console.log(result);
