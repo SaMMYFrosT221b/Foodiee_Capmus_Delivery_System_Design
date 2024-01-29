@@ -7,6 +7,7 @@ import { RiShoppingCart2Line } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../App";
+import ProfileAvatar from "../components/ProfileAvatar";
 // import {} from  "../App"
 
 function Navbar({ cartNumber, cartItems }) {
@@ -27,6 +28,8 @@ function Navbar({ cartNumber, cartItems }) {
   };
 
   console.log(cartItems);
+
+  let userID = localStorage.getItem("UserID");
 
   //   const listItems = cartItems.map((item) => {
   //     <li>{item}</li>;
@@ -64,8 +67,9 @@ function Navbar({ cartNumber, cartItems }) {
               placeholder="   Search for Restaurant and Food"
             />
           </form>
-          <a href="">
+          <a href={`/home/user/${userID}/profile`}>
             <MdAccountCircle className="ml-4" size={50} />
+            {/* <ProfileAvatar /> */}
           </a>
 
           <button

@@ -10,6 +10,7 @@ import Navbar from "./pages/Navbar";
 import Cart from "./pages/Cart";
 import React from "react";
 import { useState } from "react";
+import ProfilleAvatar from "./components/ProfileAvatar";
 
 export const CartContext = React.createContext();
 
@@ -28,6 +29,10 @@ function App() {
             <Route path="/add" element={<Add />} />
             <Route path="/home/cart" element={<Cart />} />
             <Route path="/update/:id" element={<Update />} />
+            <Route
+              path="/home/user/:userID/profile"
+              element={<ProfilleAvatar />}
+            />
           </Routes>
         </CartContext.Provider>
       </BrowserRouter>
