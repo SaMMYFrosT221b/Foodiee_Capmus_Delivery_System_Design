@@ -9,7 +9,8 @@ import {
   deleteLiveOrder,
   showLiveOrder,
 } from "../database/live_order_controller.js";
-import { showOrder } from "../database/orders_controller.js";
+import { showOrder,updateOrder } from "../database/orders_controller.js";
+
 
 const router = express.Router();
 
@@ -93,6 +94,16 @@ router.get("/orders-taken/:id", async (req, res) => {
   const result = await showOrder(shopkeeperId);
   if (result.length == 0) {
     return res.send("No orders taken till now!");
+  }
+  return res.send(result);
+});
+
+// To show all the order shopkeeper has taken till now.
+router.put("/update-order-status/:id", async (req, res) => {
+  const shopkeeperId = req.params.id;
+  const result = await updateOrder(shopkeeperId,req.body);
+  if (result.length == 0) {
+    return res.send("No orders Updated!");
   }
   return res.send(result);
 });
