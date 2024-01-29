@@ -15,35 +15,12 @@ import {
   CInputGroup,
   CInputGroupText,
   CRow,
-  CToast,
-  CToastHeader,
-  CToastBody,
   
 } from '@coreui/react'
 import axios from 'axios';
+import Toast_alert from '../alert/alert';
 
-const Toast = ({alert}) =>{
-  return (
-  <CToast animation={false} autohide={false} visible={true}>
-          <CToastHeader closeButton>
-            <svg
-              className="rounded me-2"
-              width="20"
-              height="20"
-              xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMidYMid slice"
-              focusable="false"
-              role="img"
-            >
-              <rect width="100%" height="100%" fill="#007aff"></rect>
-            </svg>
-            <div className="fw-bold me-auto">{alert.alert}</div>
-            <small>{alert.time}</small>
-          </CToastHeader>
-          <CToastBody>{alert.message}</CToastBody>
-        </CToast>
-  )
-}
+
 
 const addNewProduct = () => {
   const [credentials, setCredentials] = useState({
@@ -99,7 +76,7 @@ const addNewProduct = () => {
           <CCardHeader>
             <strong>Add New Product</strong> <small>username</small>
           </CCardHeader>
-          {alert && <Toast alert={alert}/>}
+          {alert && <Toast_alert alert={alert}/>}
           <CCardBody>
             <CForm className="row g-3 needs-validation" onSubmit={handleSubmit}>
               <CCol md={6}>
