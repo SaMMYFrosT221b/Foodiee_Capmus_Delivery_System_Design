@@ -1,6 +1,13 @@
 # Campus Delivery System
 
-![IIT Bhilai Campus](https://collegedunia.com/university/56300-iit-bhilai-indian-institute-of-technology-iitb-bhilai/gallery)
+![Screenshot from 2024-01-31 00-22-49](https://github.com/SaMMYFrosT221b/Foodiee_Capmus_Delivery_System_Design/assets/64640663/1da79d63-9589-47bf-be77-239cdcb4ab24)
+
+## Food Items
+![Screenshot from 2024-01-31 00-22-56](https://github.com/SaMMYFrosT221b/Foodiee_Capmus_Delivery_System_Design/assets/64640663/1e7ecafa-41a7-45eb-a826-2d99d36d062d)
+
+
+## Cart 
+![Screenshot from 2024-01-31 00-23-15](https://github.com/SaMMYFrosT221b/Foodiee_Capmus_Delivery_System_Design/assets/64640663/5c2fd8f4-76cc-4f9f-be12-0b54785b8749)
 
 ## Overview
 
