@@ -7,7 +7,7 @@ const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "anant",
+    password: "123",
     database: "foodiee",
   })
   .promise();
@@ -15,14 +15,23 @@ const pool = mysql
 export async function createUser(userData) {
   // Hashing the password
   // Check if required fields are present
-  if (!userData.Name || !userData.UserName || !userData.Password || !userData.Email || !userData.UserType) {
-    return 'Name, UserName, Password, Email, and UserType are required for user creation.'
+  if (
+    !userData.Name ||
+    !userData.UserName ||
+    !userData.Password ||
+    !userData.Email ||
+    !userData.UserType
+  ) {
+    return "Name, UserName, Password, Email, and UserType are required for user creation.";
   }
 
   // Check if the UserName is unique
-  const existingUser = await pool.query("SELECT * FROM users WHERE UserName = ?", [userData.UserName]);
+  const existingUser = await pool.query(
+    "SELECT * FROM users WHERE UserName = ?",
+    [userData.UserName]
+  );
   if (existingUser[0].length > 0) {
-    return 'Username is already taken. Please choose a different one.'
+    return "Username is already taken. Please choose a different one.";
   }
   let hashedPass = await bcrypt.hash(userData.Password, 10);
 

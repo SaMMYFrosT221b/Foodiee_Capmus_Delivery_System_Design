@@ -4,7 +4,7 @@ const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "anant",
+    password: "123",
     database: "foodiee",
   })
   .promise();
@@ -29,10 +29,10 @@ export async function showOrder(shopkeeperID) {
   return row;
 }
 
-
-export async function updateOrder(shopkeeperID,item) {
-  let sql = "UPDATE LiveOrders SET orderStatus = ? WHERE ShopkeeperID = ? AND ItemID = ? AND UserID = ?";
-  let data = [item.orderStatus,item.ShopkeeperID,item.itemID,item.USERID];
+export async function updateOrder(shopkeeperID, item) {
+  let sql =
+    "UPDATE LiveOrders SET orderStatus = ? WHERE ShopkeeperID = ? AND ItemID = ? AND UserID = ?";
+  let data = [item.orderStatus, item.ShopkeeperID, item.itemID, item.USERID];
 
   const [row] = await pool.query(sql, data);
   return row;
