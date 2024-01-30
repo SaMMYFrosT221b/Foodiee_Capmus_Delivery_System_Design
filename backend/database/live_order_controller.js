@@ -9,6 +9,7 @@ const pool = mysql
   })
   .promise();
 
+<<<<<<< HEAD
 
 
   // Adding a new order in LiveOrder
@@ -36,6 +37,26 @@ const pool = mysql
       throw error;
     }
   }
+=======
+export async function addLiveOrder(liveOrderDetails) {
+  try {
+    const sql =
+      "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
+    const data = [
+      liveOrderDetails.itemID,
+      liveOrderDetails.UserID,
+      liveOrderDetails.ShopkeeperID,
+      liveOrderDetails.OrderStatus,
+      liveOrderDetails.itemQuantity,
+      liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
+    ];
+    const [row] = await pool.query(sql, data);
+    return row;
+  } catch (err) {
+    return err;
+  }
+}
+>>>>>>> 0802fc6d6da9f7a7cc388f70e09b35a3e55d2fc4
 
 export async function showLiveOrder(shopkeeperID) {
   try {

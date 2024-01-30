@@ -23,9 +23,9 @@ const Items = () => {
 
   const handleLogOut = () => {
     localStorage.removeItem("Token");
-    navigate("/user");
+    navigate("/shopkeeper");
     console.log(
-      "This is Token form local Storage:",
+      "This is the token from localStorage : ",
       localStorage.getItem("Token")
     );
   };
@@ -33,7 +33,7 @@ const Items = () => {
   React.useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
-      navigate("/user");
+      navigate("/shopkeeper");
     } else {
       navigate("/items");
     }
@@ -41,7 +41,7 @@ const Items = () => {
 
   return (
     <div className="Books text-center">
-      <h1 className="text-3xl underline m-10">User Foods Store</h1>
+      <h1 className="text-3xl underline m-10">Shopkeepers Foods Store</h1>
       <button
         className="text-2xl border p-3 text-red-500"
         onClick={handleLogOut}
