@@ -2,6 +2,41 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserSignupPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    username: "",
+    password: "",
+    phoneNo: "",
+    email: "",
+    addressLine1: "",
+    addressLine2: "",
+    userType: "Customer",
+    city: "",
+    state: "",
+  });
+
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:5000/user/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log(response);
+      console.log(formData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -32,41 +67,60 @@ function UserSignupPage() {
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
                     type="text"
+                    name="name"
+                    onChange={handleChange}
                     placeholder="Name"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="username"
+                    onChange={handleChange}
                     placeholder="Username"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="password"
+                    name="password"
+                    onChange={handleChange}
                     placeholder="Password"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    onInput={(e) => {
+                    type="tel"
+                    name="phoneNo"
+                    pattern="[1-9]{1}[0-9]{0,9}"
+                    onChange={(e) => {
                       if (e.target.value.length > 10) {
                         e.target.value = e.target.value.slice(0, 10);
+                      } else if (e.target.value < 0) {
+                        e.target.value = null;
+                      } else if (e.target.value[0] == 0) {
+                        e.target.value = null;
                       }
+                      handleChange(e);
                     }}
-                    type="number"
                     placeholder="Phone Number"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="email"
+                    name="email"
+                    onChange={handleChange}
                     placeholder="Email"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="addressLine1"
+                    onChange={handleChange}
                     placeholder="Address line 1"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="addressLine2"
+                    onChange={handleChange}
                     placeholder="Address line 2"
                   />
 
@@ -74,16 +128,24 @@ function UserSignupPage() {
                     <input
                       className="w-4/6 mx-1 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       type="text"
+                      name="city"
+                      onChange={handleChange}
                       placeholder="City"
                     />{" "}
                     <input
                       className="w-4/6 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       type="text"
+                      name="state"
+                      onChange={handleChange}
                       placeholder="State"
                     />
                   </div>
 
-                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <button
+                    type="submit"
+                    onClick={handleSubmit}
+                    className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                  >
                     <svg
                       className="w-6 h-6 -ml-2"
                       fill="none"

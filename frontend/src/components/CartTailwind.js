@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import NavbarFromTailWind from "../pages/NavbarFromTailWind";
 import FooterFromTailWind from "./FooterFromTailwind";
+import { CartContext } from "../App";
 
 const DUMMY_PRODUCTS = [
   {
@@ -22,54 +23,67 @@ const DUMMY_PRODUCTS = [
 ];
 
 const CartItemTailWind = () => {
-  const [cartItems, setCartItems] = useState(DUMMY_PRODUCTS);
+  // const [cartItems, setCartItems] = useState(DUMMY_PRODUCTS);
+  const { cartNumber } = useContext(CartContext);
 
-  const onRemove = (productId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    setCartItems(updatedCart);
-  };
+  const { cartItems } = useContext(CartContext);
 
-  const onQuantityChange = (productId, newQuantity) => {
-    const updatedCart = cartItems.map((item) =>
-      item.id === productId ? { ...item, quantity: newQuantity } : item
-    );
-    setCartItems(updatedCart);
-  };
+  // const onRemove = (productId) => {
+  //   const updatedCart = cartItems.filter((item) => item.id !== productId);
+  //   setCartItems(updatedCart);
+  // };
 
-  const renderCartItems = () =>
-    cartItems.map((product) => (
+  // const onQuantityChange = (productId, newQuantity) => {
+  //   const updatedCart = cartItems.map((item) =>
+  //     item.id === productId ? { ...item, quantity: newQuantity } : item
+  //   );
+  //   setCartItems(updatedCart);
+  // };
+
+  const renderCartItems = () => {
+    if (cartItems.length == 0) {
+      return (
+        <p className="font-bold text-2xl text-center m-10">
+          Cart is <span className="text-green-500">Empty</span>
+        </p>
+      );
+    }
+    return cartItems.map((product) => (
       <div
-        key={product.id}
+        key={product.itemID}
         className=" justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start"
       >
         <img
-          src={product.image}
+          src="/3d-casual-life-burger-straight.png"
           alt="product-image"
           className="w-full rounded-lg sm:w-40"
         />
         <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
           <div className="mt-5 sm:mt-0">
-            <h2 className="text-lg font-bold text-gray-900">{product.name}</h2>
-            <p className="mt-1 text-xs text-gray-700">{product.size}</p>
+            <h2 className="text-lg font-bold text-gray-900">
+              {product.itemName}
+            </h2>
+            {/* <p className="mt-1 text-xs text-gray-700">{product.itemPrice}</p> */}
           </div>
           <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
             <div className="flex items-center border-gray-100">
               <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
                 -
               </span>
-              <input
-                className="h-8 w-8 border bg-white text-center text-xs outline-none"
+              {/* <input
+                className="h-8 w-8 border  text-center text-xs outline-none"
                 type="number"
-                value={product.quantity}
+                value={product.itemQuantity}
                 min="1"
-                onChange={(e) => onQuantityChange(product.id, e.target.value)}
-              />
+                // onChange={(e) => onQuantityChange(product.id, e.target.value)}
+              /> */}
+              <p>{product.itemQuantity}</p>
               <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
                 +
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <p className="text-sm">{product.price}</p>
+              <p className="text-sm">{product.itemPrice}</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -77,7 +91,7 @@ const CartItemTailWind = () => {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-                onClick={() => onRemove(product.id)}
+                // onClick={() => onRemove(product.itemID)}
               >
                 <path
                   strokeLinecap="round"
@@ -90,10 +104,11 @@ const CartItemTailWind = () => {
         </div>
       </div>
     ));
+  };
 
   return (
     <>
-      <NavbarFromTailWind />
+      <NavbarFromTailWind cartNumber={cartNumber} />
       <div className="flex justify-center items-center flex-wrap m-10">
         <div className="grid gap-6 flex-col justify-center">
           {renderCartItems()}

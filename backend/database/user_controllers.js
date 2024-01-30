@@ -27,7 +27,7 @@ export async function createUser(userData) {
 
   // Check if the UserName is unique
   const existingUser = await pool.query(
-    "SELECT * FROM users WHERE UserName = ?",
+    "SELECT * FROM Users WHERE UserName = ?",
     [userData.UserName]
   );
   if (existingUser[0].length > 0) {
@@ -36,7 +36,7 @@ export async function createUser(userData) {
   let hashedPass = await bcrypt.hash(userData.Password, 10);
 
   const [row] = await pool.query(
-    "INSERT INTO users (Name, UserName,Password, PhoneNo, Email, UserType,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "INSERT INTO Users (Name, UserName,Password, PhoneNo, Email, UserType,AddressLine1,AddressLine2,City,State,PostalCode, Country) VALUES  (?, ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
     [
       userData.Name,
       userData.UserName,

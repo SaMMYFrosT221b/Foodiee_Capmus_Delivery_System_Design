@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function NavbarFromTailWind({ cartNumber }) {
   return (
     <nav class="bg-white border-gray-200 sticky top-0 z-1 ">
@@ -140,21 +142,21 @@ function NavbarFromTailWind({ cartNumber }) {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Services
+              <a class="block cursor-pointer py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                Logout
               </a>
             </li>
             <li></li>
           </ul>
-          <button
-            type="button"
-            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          >
-            Cart : {cartNumber}
-          </button>
+
+          <Link to={"/foodiee-home/cart"}>
+            <button
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Cart : {cartNumber}
+            </button>
+          </Link>
         </div>
       </div>
     </nav>

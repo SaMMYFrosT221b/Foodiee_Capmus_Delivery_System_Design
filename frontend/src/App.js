@@ -13,6 +13,7 @@ import { useState } from "react";
 import ProfilleAvatar from "./components/ProfileAvatar";
 import FoodieeHome from "./components/FoodieeHome";
 import CartItemTailWind from "./components/CartTailwind";
+import SignUpPage from "./pages/SignupPageTailwind";
 
 export const CartContext = React.createContext();
 
@@ -29,7 +30,8 @@ function App() {
           <Routes>
             {/* <Route path="/" element={<Home />} /> */}
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/sign-up" element={<Signup />} />
+            {/* <Route path="/signup" element={<SignUpPage />} /> */}
             <Route path="/home" element={<Home />} />
             <Route path="/add" element={<Add />} />
             <Route path="/home/cart" element={<Cart />} />

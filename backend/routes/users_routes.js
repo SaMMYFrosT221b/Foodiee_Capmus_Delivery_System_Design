@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   console.log("This is user routes");
-  return res.status(200).send({message: "This is user routes"});
+  return res.status(200).send({ message: "This is user routes" });
 });
 
 router.post("/login", async (req, res) => {
@@ -17,20 +17,20 @@ router.post("/login", async (req, res) => {
 
 router.post("/signup", async (req, res) => {
   const userData = {
-    Name: req.body.Name,
-    UserName: req.body.UserName,
-    Password: req.body.Password,
-    PhoneNo: req.body.PhoneNo,
-    Email: req.body.Email,
-    UserType: req.body.UserType,
-    AddressLine1: req.body.AddressLine1,
-    AddressLine2: req.body.AddressLine2,
-    City: req.body.City,
-    State: req.body.State,
-    PostalCode: req.body.PostalCode,
-    Country: req.body.Country,
+    Name: req.body.name,
+    UserName: req.body.username,
+    Password: req.body.password,
+    PhoneNo: req.body.phoneNo,
+    Email: req.body.email,
+    UserType: req.body.userType,
+    AddressLine1: "Shopping center, Faculty building",
+    AddressLine2: "Gate no 2, IIT Bhilai",
+    City: "Durg",
+    State: "Chattisgarh",
+    PostalCode: "491001",
+    Country: "INDIA",
   };
-  
+  // console.log("This is user data: ", userData);
   const result = await createUser(userData);
   return res.send(result);
 });
@@ -38,12 +38,12 @@ router.post("/signup", async (req, res) => {
 // To add in live order (placeOrder)
 router.post("/place-order", async (req, res) => {
   const itemData = {
-    ItemID:req.body.ItemID,
-    UserID:req.body.UserID,
-    ShopkeeperID:req.body.ShopkeeperID,
-    OrderStatus:req.body.OrderStatus,
-    TotalQuantity:req.body.TotalQuantity,
-    TotalAmount:req.body.TotalAmount,
+    ItemID: req.body.ItemID,
+    UserID: req.body.UserID,
+    ShopkeeperID: req.body.ShopkeeperID,
+    OrderStatus: req.body.OrderStatus,
+    TotalQuantity: req.body.TotalQuantity,
+    TotalAmount: req.body.TotalAmount,
   };
 
   const result = await addLiveOrder(itemData);
