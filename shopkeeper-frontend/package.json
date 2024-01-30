@@ -13,14 +13,10 @@
   "license": "MIT",
   "author": "The CoreUI Team (https://github.com/orgs/coreui/people)",
   "scripts": {
-<<<<<<< HEAD
-=======
     "start": "set PORT=8000 &&  react-scripts start",
->>>>>>> 0802fc6d6da9f7a7cc388f70e09b35a3e55d2fc4
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "eslint \"src/**/*.js\"",
-    "start": "react-scripts start",
     "test": "react-scripts test",
     "test:cov": "npm test -- --coverage --watchAll=false",
     "test:debug": "react-scripts --inspect-brk test --runInBand"

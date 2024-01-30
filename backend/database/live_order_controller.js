@@ -9,7 +9,6 @@ const pool = mysql
   })
   .promise();
 
-<<<<<<< HEAD
 
 
   // Adding a new order in LiveOrder
@@ -37,8 +36,7 @@ const pool = mysql
       throw error;
     }
   }
-=======
-export async function addLiveOrder(liveOrderDetails) {
+export async function addLiveOrders(liveOrderDetails) {
   try {
     const sql =
       "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
@@ -56,7 +54,6 @@ export async function addLiveOrder(liveOrderDetails) {
     return err;
   }
 }
->>>>>>> 0802fc6d6da9f7a7cc388f70e09b35a3e55d2fc4
 
 export async function showLiveOrder(shopkeeperID) {
   try {
