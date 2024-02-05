@@ -4,17 +4,15 @@ const pool = mysql
   .createPool({
     host: "127.0.0.1",
     user: "root",
-    password: "anant",
+    password: "123",
     database: "foodiee",
   })
   .promise();
 
-
-
-  // Adding a new order in LiveOrder
-  export async function addLiveOrder(liveOrder) {
+// Adding a new order in LiveOrder
+export async function addLiveOrder(liveOrder) {
     let sql =
-      "INSERT INTO LiveOrders(ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
+      "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
     let data = [
       liveOrder.ItemID,
       liveOrder.UserID,
@@ -24,9 +22,7 @@ const pool = mysql
       liveOrder.TotalAmount,
     ];
 
-  
     try {
-      
       const [row] = await pool.query(sql, data);
       // const result = await showItem(row.insertId);
       return `Congrats! Your Order is successfull! -random-number`;
@@ -36,24 +32,25 @@ const pool = mysql
       throw error;
     }
   }
-export async function addLiveOrders(liveOrderDetails) {
-  try {
-    const sql =
-      "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
-    const data = [
-      liveOrderDetails.itemID,
-      liveOrderDetails.UserID,
-      liveOrderDetails.ShopkeeperID,
-      liveOrderDetails.OrderStatus,
-      liveOrderDetails.itemQuantity,
-      liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
-    ];
-    const [row] = await pool.query(sql, data);
-    return row;
-  } catch (err) {
-    return err;
-  }
+  export async function addLiveOrders(liveOrderDetails) {
+    try {
+      const sql =
+        "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
+      const data = [
+        liveOrderDetails.itemID,
+        liveOrderDetails.UserID,
+        liveOrderDetails.ShopkeeperID,
+        liveOrderDetails.OrderStatus,
+        liveOrderDetails.itemQuantity,
+        liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
+      ];
+      const [row] = await pool.query(sql, data);
+      return row;
+    } catch (err) {
+      return err;
+    }
 }
+
 
 export async function showLiveOrder(shopkeeperID) {
   try {
@@ -66,7 +63,7 @@ export async function showLiveOrder(shopkeeperID) {
   } catch (error) {
     console.error(`An error occurred while fetching the item: ${error}`);
     // throw error;
-    return "Error Found"
+    return "Error Found";
   }
 }
 

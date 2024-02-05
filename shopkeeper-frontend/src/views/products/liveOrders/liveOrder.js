@@ -155,16 +155,14 @@ const liveOrders = () => {
                                                 <CBadge color={item.OrderStatus === "Approved" ? "success" : item.OrderStatus === "Rejected" ? "danger" : "warning"}>{item.OrderStatus}</CBadge>
                                             </CTableDataCell>
                                             <CTableDataCell>
-                                                <button className={`btn btn-success mx-2 ${item.OrderStatus === "Approved" ? "disabled" : ""}`}
+                                                <button className={`btn btn-success mx-2 ${item.OrderStatus === "Approved" | item.OrderStatus === "Rejected"? "disabled" : ""}`}
                                                     onClick={() => approved(item, "Approved")} type="button" disabled={btnDisable[item.ItemID]}>
                                                     <CIcon icon={icon.cilCheck} size="sm" />
                                                 </button>
-                                                <button className={`btn btn-danger ${item.OrderStatus === "Rejected" ? "disabled" : ""}`}
+                                                <button className={`btn btn-danger ${item.OrderStatus === "Approved" | item.OrderStatus === "Rejected" ? "disabled" : ""}`}
                                                     onClick={() => approved(item, "Rejected")} type="button" disabled={btnDisable[item.ItemID]}>
                                                     <CIcon icon={icon.cilTrash} size="sm" />
                                                 </button>
-
-
 
                                             </CTableDataCell>
 

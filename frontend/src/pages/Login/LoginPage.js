@@ -33,7 +33,8 @@ function LoginPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/${routesMappingOfUSerTypes[formData.UserType]
+        `http://localhost:5000/${
+          routesMappingOfUSerTypes[formData.UserType]
         }/login`,
         {
           method: "POST",
@@ -72,10 +73,10 @@ function LoginPage() {
         console.log(responseData.content);
       }
     } catch (error) {
-      setError('Error 505 Server Side.');
+      setError("Error 505 Server Side.");
       console.error("Error sending data to server:", error);
 
-      // Server Side Error 
+      // Server Side Error
     }
   };
 
@@ -159,7 +160,7 @@ function LoginPage() {
                   </button>
                   <p className="text-center py-3">
                     Dont have account{" "}
-                    <a className="underline" href="/signup">
+                    <a className="underline" href="/sign-up">
                       Create one!
                     </a>
                   </p>

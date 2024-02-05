@@ -17,6 +17,13 @@ import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
 const Login = () => {
+  const isAuthenticated = localStorage.getItem('token')
+  if(isAuthenticated){
+    return (
+      <div> LogOut Before trying to SignIn</div>
+    )
+  }
+  else{
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
@@ -80,7 +87,10 @@ const Login = () => {
         </CRow>
       </CContainer>
     </div>
+
+    
   )
+  }
 }
 
 export default Login
