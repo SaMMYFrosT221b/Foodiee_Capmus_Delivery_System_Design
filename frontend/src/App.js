@@ -6,14 +6,15 @@ import "./App.css";
 import Signup from "./pages/SignupForm";
 // import Home from "./pages/Home";
 import LoginPage from "./pages/Login/LoginPage";
-import Navbar from "./pages/Navbar";
+// import Navbar from "./pages/Navbar";
 import Cart from "./pages/Cart";
 import React from "react";
 import { useState } from "react";
 import ProfilleAvatar from "./components/ProfileAvatar";
 import FoodieeHome from "./components/FoodieeHome";
 import CartItemTailWind from "./components/CartTailwind";
-import SignUpPage from "./pages/SignupPageTailwind";
+// import SignUpPage from "./pages/SignupPageTailwind";
+// import AdjustableDivs from "./components/AdjustableDivs";
 
 export const CartContext = React.createContext();
 
@@ -38,8 +39,9 @@ function App() {
             <Route path="/update/:id" element={<Update />} />
             <Route path="/foodiee-home" element={<FoodieeHome />} />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
+            {/* <Route path="/div" element={<AdjustableDivs />} /> */}
             <Route
-              path="/home/user/:userID/profile"
+              path="/foodiee-home/user/:userID/profile"
               element={<ProfilleAvatar />}
             />
           </Routes>

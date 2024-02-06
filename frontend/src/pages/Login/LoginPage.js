@@ -51,6 +51,7 @@ function LoginPage() {
       if (responseData.status == 1) {
         localStorage.setItem("Token", responseData.authToken);
         localStorage.setItem("UserID", responseData.userID);
+        localStorage.setItem("UserName", formData.Email);
         console.log("This is the token: ", localStorage.getItem("Token"));
         alert(
           responseData.content +
