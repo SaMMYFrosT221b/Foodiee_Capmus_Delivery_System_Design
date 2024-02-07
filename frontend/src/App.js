@@ -14,6 +14,7 @@ import ProfilleAvatar from "./components/ProfileAvatar";
 import FoodieeHome from "./components/FoodieeHome";
 import CartItemTailWind from "./components/CartTailwind";
 import SignUpPage from "./pages/SignupPageTailwind";
+import SearchPage from './pages/Search/SearchPage';
 
 export const CartContext = React.createContext();
 
@@ -38,11 +39,13 @@ function App() {
             <Route path="/update/:id" element={<Update />} />
             <Route path="/foodiee-home" element={<FoodieeHome />} />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route
               path="/home/user/:userID/profile"
               element={<ProfilleAvatar />}
             />
           </Routes>
+
         </CartContext.Provider>
       </BrowserRouter>
     </div>

@@ -56,11 +56,7 @@ router.get("/items", async (req, res) => {
 });
 
 router.post("/add-live-orders", async (req, res) => {
-<<<<<<< HEAD
   console.log("This is cart req body", typeof req.body);
-=======
-  console.log("This is cart req body", req.body);
->>>>>>> 02f13ad211f9ea87bab8642cc9fb09d1ea2735ff
   const liveOrderData = req.body;
   // console.log(liveOrderData.length);
   if (liveOrderData.length == 0) {
@@ -68,11 +64,7 @@ router.post("/add-live-orders", async (req, res) => {
   }
 
   for (let i = 0; i < liveOrderData.length; i++) {
-<<<<<<< HEAD
     const result = await addLiveOrder(liveOrderData[i]);
-=======
-    const result = await addLiveOrders(liveOrderData[i]);
->>>>>>> 02f13ad211f9ea87bab8642cc9fb09d1ea2735ff
   }
   return res.send("add-live-order INVOKED");
   // const liveOrderData = {
