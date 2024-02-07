@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import SimpleAlert from "../Alert";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const differentHostData = {
@@ -59,7 +57,7 @@ function LoginPage() {
             localStorage.getItem("UserID")
         );
         console.log(responseData.content);
-        navigate(`/home`);
+        navigate(`/foodiee-home`);
         // if (formData.UserType === "User") {
         //   window.location.href = `http://localhost:7000/user/${responseData.authToken}`;
         // }
@@ -86,7 +84,7 @@ function LoginPage() {
     if (!Token) {
       navigate("/login");
     } else {
-      navigate("/home");
+      navigate("/foodiee-home");
     }
   }, [navigate]);
 

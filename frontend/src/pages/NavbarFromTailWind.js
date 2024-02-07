@@ -1,24 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavbarFromTailWind({ cartNumber }) {
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    localStorage.removeItem("Token");
+    navigate("/login");
+  };
   let userID = localStorage.getItem("UserID");
   return (
     <nav class="bg-white border-gray-200 sticky top-0 z-1 ">
       <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a
-          href="https://flowbite.com/"
-          class="flex items-center space-x-3 rtl:space-x-reverse"
-        >
-          <img
-            // src="https://flowbite.com/docs/images/logo.svg"
-            src="/logo.png"
-            class="h-8"
-            alt="Foodiee Logo"
-          />
-          <span class="self-center text-2xl font-semibold whitespace-nowrap ">
-            Foodiee
-          </span>
-        </a>
+        <Link to="/foodiee-home">
+          <a href="" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img
+              // src="https://flowbite.com/docs/images/logo.svg"
+              src="/logo.png"
+              class="h-8"
+              alt="Foodiee Logo"
+            />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap ">
+              Foodiee
+            </span>
+          </a>
+        </Link>
         <div class="flex md:order-2">
           <button
             type="button"
@@ -146,7 +150,10 @@ function NavbarFromTailWind({ cartNumber }) {
               </Link>
             </li>
             <li>
-              <a class="block cursor-pointer py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+              <a
+                class="block cursor-pointer py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0  md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+                onClick={handleLogOut}
+              >
                 Logout
               </a>
             </li>
