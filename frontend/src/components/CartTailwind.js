@@ -24,9 +24,14 @@ const DUMMY_PRODUCTS = [
 
 const CartItemTailWind = () => {
   // const [cartItems, setCartItems] = useState(DUMMY_PRODUCTS);
-  const { cartNumber } = useContext(CartContext);
+  const { cartNumber, setCartNumber } = useContext(CartContext);
 
-  const { cartItems } = useContext(CartContext);
+  // const { setCartItems } = useContext(CartContext);
+
+  // let cartItems = localStorage.getItem("cartItems");
+  // cartItems = JSON.parse(cartItems);
+  // // console.log(list);
+  // console.log("This is cart", cartItems);
 
   // const onRemove = (productId) => {
   //   const updatedCart = cartItems.filter((item) => item.id !== productId);
@@ -39,6 +44,27 @@ const CartItemTailWind = () => {
   //   );
   //   setCartItems(updatedCart);
   // };
+
+  let list = localStorage.getItem("cartItems");
+  let cartItems = [];
+  if (list !== null) {
+    cartItems = JSON.parse(list);
+    // setCartItems(cartItems);
+    setCartNumber(cartItems.length);
+    console.log("rat", cartItems);
+  }
+
+  function handleAddItem(value, productId) {
+    let list = localStorage.getItem("cartItems");
+    let currentCart = JSON.parse(list);
+    currentCart.map((item, index) => {
+      if (item.itemID === productId) {
+        item.itemQuantity += value;
+      }
+    });
+    localStorage.setItem("cartItems", JSON.stringify(currentCart));
+    console.log("Hello", productId);
+  }
 
   const renderCartItems = () => {
     if (cartItems.length == 0) {
@@ -78,7 +104,12 @@ const CartItemTailWind = () => {
                 // onChange={(e) => onQuantityChange(product.id, e.target.value)}
               /> */}
               <p>{product.itemQuantity}</p>
-              <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
+              <span
+                className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
+                onClick={() => {
+                  handleAddItem(1, product.itemID);
+                }}
+              >
                 +
               </span>
             </div>
@@ -130,7 +161,14 @@ const CartItemTailWind = () => {
               <p class="text-sm text-gray-700">including VAT</p>
             </div>
           </div>
-          <button class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
+          <button
+            class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
+            onClick={() => {
+              let list = localStorage.getItem("cartItems");
+              list = JSON.parse(list);
+              console.log("This is cart item from localstorage", list);
+            }}
+          >
             Check out
           </button>
         </div>

@@ -7,6 +7,7 @@ import Filters from "./Filters";
 import FooterFromTailWind from "./FooterFromTailwind";
 import QuoteHome from "./Quote";
 import RestaurantList from "./RestrauntCard";
+import HomeItemCarousel from "../components/Carousel/HomeItemCarousel";
 
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +27,14 @@ function FoodieeHomeItems() {
     }
   }, [navigate]);
 
-  const { cartNumber } = useContext(CartContext);
+  const { cartNumber, setCartNumber } = useContext(CartContext);
+
+  // let list = localStorage.getItem("cartItems");
+  // list = JSON.parse(list);
+
+  // if (list.length != 0) {
+  //   setCartNumber(list.length);
+  // }
 
   useEffect(() => {
     const fetchAllItems = async () => {
@@ -108,7 +116,7 @@ function FoodieeHomeItems() {
   return (
     <>
       <NavbarFromTailWind cartNumber={cartNumber} />
-      <ImageCarousel />
+      <HomeItemCarousel />
       <Filters />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-20">
         {renderListOfUserNames(items)}

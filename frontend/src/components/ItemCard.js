@@ -13,7 +13,14 @@ function ItemCard({
   cousineType,
 }) {
   const { cartNumber, setCartNumber } = useContext(CartContext);
-  const { cartItems } = useContext(CartContext);
+  const { cartItems, setCartItems } = useContext(CartContext);
+
+  // let list = localStorage.getItem("cartItems");
+  // list = JSON.parse(list);
+
+  // if (list.length != 0) {
+  //   setCartItems(list);
+  // }
 
   function checkItem(itemComponent) {
     let rat = false;
@@ -33,6 +40,8 @@ function ItemCard({
     setCartNumber(cartNumber + 1);
 
     let check = checkItem(itemComponent);
+    // if(Object.keys(cartItems).length === 0)
+
     if (!check) {
       cartItems.push(itemComponent);
     } else {
@@ -42,6 +51,8 @@ function ItemCard({
         }
       });
     }
+    let jsonString = JSON.stringify(cartItems);
+    localStorage.setItem("cartItems", jsonString);
   }
 
   return (

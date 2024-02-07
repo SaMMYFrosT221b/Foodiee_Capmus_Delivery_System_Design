@@ -44,7 +44,6 @@ function RestaurantCard({
           <div>
             <span className="text-gray-600">{location}</span>
           </div>
-          <button>Click</button>
         </div>
       </div>
     </>

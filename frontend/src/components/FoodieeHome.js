@@ -26,7 +26,18 @@ function FoodieeHome() {
     }
   }, [navigate]);
 
-  const { cartNumber } = useContext(CartContext);
+  const { cartNumber, setCartNumber } = useContext(CartContext);
+
+  let a = JSON.parse(localStorage.getItem("cartItems"));
+  let cartSize = a ? a.length : 0;
+  setCartNumber(cartSize);
+
+  // let list = localStorage.getItem("cartItems");
+  // list = JSON.parse(list);
+
+  // if (list.length != 0) {
+  //   setCartNumber(list.length);
+  // }
 
   useEffect(() => {
     const fetchAllItems = async () => {

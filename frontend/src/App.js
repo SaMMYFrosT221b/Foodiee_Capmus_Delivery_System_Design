@@ -10,10 +10,16 @@ import FoodieeHomeItems from "./components/FoodieeHomeItems";
 import CartItemTailWind from "./components/CartTailwind";
 
 export const CartContext = React.createContext();
+let list = localStorage.getItem("cartItems");
+let jsonString = [];
+if (list !== null) {
+  jsonString = JSON.parse(list);
+}
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(jsonString);
   const [cartNumber, setCartNumber] = useState(0);
+
   return (
     <div className="textCenter flex flex-col">
       <BrowserRouter>
