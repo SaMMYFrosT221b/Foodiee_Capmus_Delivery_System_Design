@@ -23,9 +23,6 @@ const DUMMY_PRODUCTS = [
 ];
 
 const CartItemTailWind = () => {
-  // const [cartItems, setCartItems] = useState(DUMMY_PRODUCTS);
-  const { cartNumber, setCartNumber } = useContext(CartContext);
-
   // const { setCartItems } = useContext(CartContext);
 
   // let cartItems = localStorage.getItem("cartItems");
@@ -45,26 +42,10 @@ const CartItemTailWind = () => {
   //   setCartItems(updatedCart);
   // };
 
-  let list = localStorage.getItem("cartItems");
-  let cartItems = [];
-  if (list !== null) {
-    cartItems = JSON.parse(list);
-    // setCartItems(cartItems);
-    setCartNumber(cartItems.length);
-    console.log("rat", cartItems);
-  }
-
   function handleAddItem(value, productId) {
-    let list = localStorage.getItem("cartItems");
-    let currentCart = JSON.parse(list);
-    currentCart.map((item, index) => {
-      if (item.itemID === productId) {
-        item.itemQuantity += value;
-      }
-    });
-    localStorage.setItem("cartItems", JSON.stringify(currentCart));
-    console.log("Hello", productId);
+    console.log("handle add items");
   }
+  let cartItems = [];
 
   const renderCartItems = () => {
     if (cartItems.length == 0) {
@@ -139,7 +120,7 @@ const CartItemTailWind = () => {
 
   return (
     <>
-      <NavbarFromTailWind cartNumber={cartNumber} />
+      <NavbarFromTailWind />
       <div className="flex justify-center items-center flex-wrap m-10">
         <div className="grid gap-6 flex-col justify-center">
           {renderCartItems()}

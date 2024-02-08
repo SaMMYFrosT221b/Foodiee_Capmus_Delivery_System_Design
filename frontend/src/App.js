@@ -16,6 +16,11 @@ if (list !== null) {
   jsonString = JSON.parse(list);
 }
 
+// function YourComponent() {
+//   let { id } = useParams();
+//   return <h1>This is the shopID: {id} </h1>;
+// }
+
 function App() {
   const [cartItems, setCartItems] = useState(jsonString);
   const [cartNumber, setCartNumber] = useState(0);
@@ -30,7 +35,11 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/foodiee-home" element={<FoodieeHome />} />
-            <Route path="/foodiee-home/items" element={<FoodieeHomeItems />} />
+            {/* <Route path="/foodiee-home/items" element={<FoodieeHomeItems />} /> */}
+            <Route
+              path="/foodiee-home/items/:id"
+              element={<FoodieeHomeItems />}
+            />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
             <Route
               path="/foodiee-home/user/:userID/profile"

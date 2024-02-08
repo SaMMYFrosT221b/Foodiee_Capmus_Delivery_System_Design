@@ -3,14 +3,14 @@ import {
   checkShopkeeper,
   createShopkeeper,
   getShopkeeper,
+  getShopkeepers,
 } from "../database/shopkeeper_controllers.js";
 import { addItem, showShopkeeperItems } from "../database/items_controllers.js";
 import {
   deleteLiveOrder,
   showLiveOrder,
 } from "../database/live_order_controller.js";
-import { showOrder,updateOrder } from "../database/orders_controller.js";
-
+import { showOrder, updateOrder } from "../database/orders_controller.js";
 
 const router = express.Router();
 
@@ -58,6 +58,12 @@ router.get("/profile/:id", async (req, res) => {
   return res.send(result);
 });
 
+// To get all the restraunts to user
+router.get("/get-restaurants", async (req, res) => {
+  const result = await getShopkeepers();
+  return res.send(result);
+});
+
 // To add an item to his shop
 router.post("/add-item", async (req, res) => {
   const itemData = {
@@ -87,7 +93,6 @@ router.get("/live-orders/:id", async (req, res) => {
   return res.send(result);
 });
 
-
 // To show all the order shopkeeper has taken till now.
 router.get("/orders-taken/:id", async (req, res) => {
   const shopkeeperId = req.params.id;
@@ -101,13 +106,12 @@ router.get("/orders-taken/:id", async (req, res) => {
 // To show all the order shopkeeper has taken till now.
 router.put("/update-order-status/:id", async (req, res) => {
   const shopkeeperId = req.params.id;
-  const result = await updateOrder(shopkeeperId,req.body);
+  const result = await updateOrder(shopkeeperId, req.body);
   if (result.length == 0) {
     return res.send("No orders Updated!");
   }
   return res.send(result);
 });
-
 
 // To delete the live order
 router.get("delete-live-orders/:id", async (req, res) => {

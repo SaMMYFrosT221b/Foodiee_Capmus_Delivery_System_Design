@@ -8,6 +8,7 @@ import FooterFromTailWind from "./FooterFromTailwind";
 import QuoteHome from "./Quote";
 import RestaurantList from "./RestrauntCard";
 import HomeItemCarousel from "../components/Carousel/HomeItemCarousel";
+import { useParams } from "react-router-dom";
 
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,28 +19,24 @@ function FoodieeHomeItems() {
   const [items, setItemsData] = useState([]);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  let { id } = useParams();
+  console.log("Thsi id is this:", id);
+
+  useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
       navigate("/login");
-    } else {
-      navigate("/foodiee-home/items");
     }
   }, [navigate]);
 
   const { cartNumber, setCartNumber } = useContext(CartContext);
 
-  // let list = localStorage.getItem("cartItems");
-  // list = JSON.parse(list);
-
-  // if (list.length != 0) {
-  //   setCartNumber(list.length);
-  // }
-
   useEffect(() => {
     const fetchAllItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/items");
+        const res = await axios.get(
+          `http://localhost:5000/shopkeeper/catalogue/${id}`
+        );
 
         setItemsData(res.data);
       } catch (error) {

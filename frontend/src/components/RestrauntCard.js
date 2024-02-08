@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function RestaurantCard({
+  shopID,
   title,
   rating,
   deliveryTime,
@@ -11,7 +13,7 @@ function RestaurantCard({
 }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate("/foodiee-home/items");
+    navigate(`/foodiee-home/items/${shopID}`);
   };
   return (
     <>
@@ -51,86 +53,114 @@ function RestaurantCard({
 }
 
 function RestaurantList() {
-  const restaurants = [
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/1.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/2.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/3.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/4.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/1.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/3.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/2.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/1.jpg",
-    },
-    {
-      title: "California Burrito",
-      rating: "4.5",
-      deliveryTime: "30",
-      cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
-      location: "Hyderabad",
-      imageSrc: "/4.jpg",
-    },
-  ];
+  const [restaurantsData, setrestaurantsData] = useState([]);
+  useEffect(() => {
+    const fetchAllRestaurants = async () => {
+      try {
+        const restaurants = await axios.get(
+          "http://localhost:5000/shopkeeper/get-restaurants"
+        );
+        let updateRes = restaurants.data.map((shop, index) => {
+          let obj = {
+            shopID: shop.ShopkeeperID,
+            title: shop.ShopName,
+            rating: "4.5",
+            deliveryTime: "30",
+            cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+            location: `${shop.City}, ${shop.State}`,
+            imageSrc: "/1.jpg",
+          };
+          return obj;
+        });
+        setrestaurantsData(updateRes);
+        console.log("Successfull");
+      } catch (error) {
+        console.log("error = ", error);
+      }
+    };
+    fetchAllRestaurants();
+  }, []);
+
+  // const restaurants = [
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/1.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/2.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/3.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/4.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/1.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/3.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/2.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/1.jpg",
+  //   },
+  //   {
+  //     title: "California Burrito",
+  //     rating: "4.5",
+  //     deliveryTime: "30",
+  //     cuisine: "Italian, Asian, Mexican, American, Salads, Continental..",
+  //     location: "Hyderabad",
+  //     imageSrc: "/4.jpg",
+  //   },
+  // ];
 
   return (
     <>
       <p className="text-3xl font-bold mx-[30px]">Restaurants Near me</p>
       <div className="flex flex-wrap -mx-4 mb-40">
-        {restaurants.map((restaurant, index) => (
+        {restaurantsData.map((restaurant, index) => (
           <RestaurantCard key={index} {...restaurant} />
         ))}
       </div>

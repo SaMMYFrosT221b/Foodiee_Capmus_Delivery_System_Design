@@ -11,22 +11,23 @@ const pool = mysql
 
 export async function addToCart(cartData) {
   let sql =
-    "INSERT INTO Cart (UserID, itemID, ShopkeeperID, OrderStatus, itemName, itemQuantity, itemPrice ) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO Cart (UserID, itemID, ShopkeeperID, itemName, itemQuantity, itemPrice ) VALUES (?, ?, ?, ?, ?, ?)";
   let data = [
     cartData.UserID,
     cartData.itemID,
     cartData.ShopkeeperID,
-    cartData.OrderStatus,
     cartData.itemName,
     cartData.itemQuantity,
     cartData.itemPrice,
+    cartData.operator,
   ];
 
   try {
     const updateResult = await updateItemQuantity(
       cartData.UserID,
       cartData.itemID,
-      cartData.itemQuantity
+      cartData.itemQuantity,
+      cartData.operator
     );
     if (updateResult.statusCode === 1) {
       return updateResult.desc;
@@ -39,7 +40,7 @@ export async function addToCart(cartData) {
   }
 }
 
-async function updateItemQuantity(userID, itemID, newQuantity) {
+async function updateItemQuantity(userID, itemID, newQuantity, operator) {
   try {
     let [results] = await pool.query(
       "SELECT itemID FROM Cart WHERE UserID = ? AND itemID = ?",
@@ -47,10 +48,17 @@ async function updateItemQuantity(userID, itemID, newQuantity) {
     );
 
     if (results.length > 0) {
-      await pool.query(
-        "UPDATE Cart SET itemQuantity = ? WHERE UserID = ? AND itemID = ?",
-        [newQuantity, userID, itemID]
-      );
+      if (operator === "+") {
+        await pool.query(
+          "UPDATE Cart SET itemQuantity = itemQuantity + ? WHERE UserID = ? AND itemID = ?",
+          [newQuantity, userID, itemID]
+        );
+      } else if (operator === "-") {
+        await pool.query(
+          "UPDATE Cart SET itemQuantity = GREATEST(0, itemQuantity - ?) WHERE UserID = ? AND itemID = ?",
+          [newQuantity, userID, itemID]
+        );
+      }
 
       return {
         statusCode: 1,
@@ -107,7 +115,6 @@ export async function getItemsByUser(userID) {
 // //   UserID: 12,
 // //   itemID: 10,
 // //   ShopkeeperID: 2,
-// //   OrderStatus: "Pending",
 // //   itemName: "Pani Puri",
 // //   itemQuantity: 10,
 // //   itemPrice: 10.23,
