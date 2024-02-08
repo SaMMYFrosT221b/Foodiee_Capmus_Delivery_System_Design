@@ -23,6 +23,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/", staticRoutes);
+app.use("/cart", cartRoutes);
 app.use("/user", userRoutes);
 app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);

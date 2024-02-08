@@ -15,13 +15,6 @@ function ItemCard({
   const { cartNumber, setCartNumber } = useContext(CartContext);
   const { cartItems, setCartItems } = useContext(CartContext);
 
-  // let list = localStorage.getItem("cartItems");
-  // list = JSON.parse(list);
-
-  // if (list.length != 0) {
-  //   setCartItems(list);
-  // }
-
   function checkItem(itemComponent) {
     let rat = false;
     cartItems.map((item) => {
