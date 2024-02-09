@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import NavbarFromTailWind from "../pages/NavbarFromTailWind";
 import FooterFromTailWind from "./FooterFromTailwind";
 import { CartContext } from "../App";
+import axios from "axios";
 
 const DUMMY_PRODUCTS = [
   {
@@ -23,29 +24,71 @@ const DUMMY_PRODUCTS = [
 ];
 
 const CartItemTailWind = () => {
-  // const { setCartItems } = useContext(CartContext);
+  let [total, setTotal] = useState(0);
+  const [cartItems, setCartItems] = useState([]);
+  const user = Number(localStorage.getItem("UserID"));
 
-  // let cartItems = localStorage.getItem("cartItems");
-  // cartItems = JSON.parse(cartItems);
-  // // console.log(list);
-  // console.log("This is cart", cartItems);
+  useEffect(() => {
+    const allItems = async () => {
+      const allItemData = await axios.post(
+        "http://localhost:5000/cart/get-item-by-user",
+        { UserID: user }
+      );
+      console.log("This is item:", allItemData.data);
+      setCartItems(allItemData.data);
+      let rat = 0;
+      cartItems.map((item) => {
+        rat += item.itemQuantity * item.itemPrice;
+      });
+      setTotal(rat);
+    };
+    allItems();
+  }, []);
 
-  // const onRemove = (productId) => {
-  //   const updatedCart = cartItems.filter((item) => item.id !== productId);
-  //   setCartItems(updatedCart);
-  // };
+  // console.log("This is the items form the databases: ", items);
 
-  // const onQuantityChange = (productId, newQuantity) => {
-  //   const updatedCart = cartItems.map((item) =>
-  //     item.id === productId ? { ...item, quantity: newQuantity } : item
-  //   );
-  //   setCartItems(updatedCart);
-  // };
+  async function handleAddItem(data) {
+    const result = await axios.post(
+      "http://localhost:5000/cart/add-to-cart",
+      data
+    );
+    console.log(data);
 
-  function handleAddItem(value, productId) {
-    console.log("handle add items");
+    const allItemData = await axios.post(
+      "http://localhost:5000/cart/get-item-by-user",
+      { UserID: user }
+    );
+    setCartItems(allItemData.data);
+    let rat = 0;
+    cartItems.map((item) => {
+      rat += item.itemQuantity * item.itemPrice;
+    });
+    setTotal(rat);
   }
-  let cartItems = [];
+
+  async function onRemove(data) {
+    const result = await axios.post(
+      "http://localhost:5000/cart/delete-item-from-cart",
+      data
+    );
+    console.log(result);
+
+    const allItemData = await axios.post(
+      "http://localhost:5000/cart/get-item-by-user",
+      { UserID: user }
+    );
+
+    setCartItems(allItemData.data);
+    let rat = 0;
+    cartItems.map((item) => {
+      rat += item.itemQuantity * item.itemPrice;
+    });
+    setTotal(rat);
+  }
+
+  async function handleCheckOut() {
+    console.log("Handle Checkout Invoked!");
+  }
 
   const renderCartItems = () => {
     if (cartItems.length == 0) {
@@ -74,7 +117,20 @@ const CartItemTailWind = () => {
           </div>
           <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
             <div className="flex items-center border-gray-100">
-              <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
+              <span
+                className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50"
+                onClick={() => {
+                  handleAddItem({
+                    UserID: user,
+                    itemID: product.itemID,
+                    ShopkeeperID: product.ShopkeeperID,
+                    itemName: product.itemName,
+                    itemQuantity: 1,
+                    itemPrice: product.itemPrice,
+                    operator: "-",
+                  });
+                }}
+              >
                 -
               </span>
               {/* <input
@@ -88,7 +144,15 @@ const CartItemTailWind = () => {
               <span
                 className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50"
                 onClick={() => {
-                  handleAddItem(1, product.itemID);
+                  handleAddItem({
+                    UserID: user,
+                    itemID: product.itemID,
+                    ShopkeeperID: product.ShopkeeperID,
+                    itemName: product.itemName,
+                    itemQuantity: 1,
+                    itemPrice: product.itemPrice,
+                    operator: "+",
+                  });
                 }}
               >
                 +
@@ -103,7 +167,12 @@ const CartItemTailWind = () => {
                 strokeWidth="1.5"
                 stroke="currentColor"
                 className="h-5 w-5 cursor-pointer duration-150 hover:text-red-500"
-                // onClick={() => onRemove(product.itemID)}
+                onClick={() => {
+                  onRemove({
+                    UserID: user,
+                    itemID: Number(product.itemID),
+                  });
+                }}
               >
                 <path
                   strokeLinecap="round"
@@ -128,26 +197,24 @@ const CartItemTailWind = () => {
         <div class=" sm:block mt-6 m-10 h-full rounded-lg border bg-white p-6 shadow-md sm:mt-4 sm:m-6 md:mt-0 md:w-1/3 lg:w-1/4">
           <div class="mb-2 flex justify-between">
             <p class="text-gray-700">Subtotal</p>
-            <p class="text-gray-700">$129.99</p>
+            <p class="text-gray-700">₹{total}</p>
           </div>
           <div class="flex justify-between">
             <p class="text-gray-700">Shipping</p>
-            <p class="text-gray-700">$4.99</p>
+            <p class="text-gray-700">₹49.9</p>
           </div>
           <hr class="my-4" />
           <div class="flex justify-between">
             <p class="text-lg font-bold">Total</p>
             <div class="">
-              <p class="mb-1 text-lg font-bold">$134.98 USD</p>
+              <p class="mb-1 text-lg font-bold">₹{total + 49.9} Rupees</p>
               <p class="text-sm text-gray-700">including VAT</p>
             </div>
           </div>
           <button
             class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             onClick={() => {
-              let list = localStorage.getItem("cartItems");
-              list = JSON.parse(list);
-              console.log("This is cart item from localstorage", list);
+              handleCheckOut();
             }}
           >
             Check out

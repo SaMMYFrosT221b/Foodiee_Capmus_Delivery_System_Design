@@ -19,7 +19,7 @@ router.post("/get-item-by-user", async (req, res) => {
   return res.send(result);
 });
 
-router.delete("/delete-item-from-cart", async (req, res) => {
+router.post("/delete-item-from-cart", async (req, res) => {
   const userID = req.body.UserID;
   const itemID = req.body.itemID;
   const result = await deleteItem(userID, itemID);

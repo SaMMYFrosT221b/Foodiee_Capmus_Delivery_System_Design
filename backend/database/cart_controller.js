@@ -82,11 +82,7 @@ export async function deleteItem(userID, itemID) {
       "DELETE FROM Cart WHERE UserID = ? AND itemID = ?",
       [userID, itemID]
     );
-    if (result.affectedRows > 0) {
-      return "Item deleted successfully!";
-    } else {
-      return "No matching item found for this user.";
-    }
+    return "Item deleted Successfully";
   } catch (error) {
     console.error(error);
     return error;
@@ -111,14 +107,14 @@ export async function getItemsByUser(userID) {
   }
 }
 
-// // const data = {
-// //   UserID: 12,
-// //   itemID: 10,
-// //   ShopkeeperID: 2,
-// //   itemName: "Pani Puri",
-// //   itemQuantity: 10,
-// //   itemPrice: 10.23,
-// // };
+// const data = {
+//   UserID: 12,
+//   itemID: 2,
+//   ShopkeeperID: 2,
+//   itemName: "Maggiee",
+//   itemQuantity: 10,
+//   itemPrice: 10.23,
+// };
 
-// const result = await getItemsByUser(12);
+// const result = await deleteItem(12, 2);
 // console.log(result);
