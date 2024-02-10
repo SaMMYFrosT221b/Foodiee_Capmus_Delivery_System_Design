@@ -3,6 +3,7 @@ import NavbarFromTailWind from "../pages/NavbarFromTailWind";
 import FooterFromTailWind from "./FooterFromTailwind";
 import { CartContext } from "../App";
 import axios from "axios";
+import ModalComponent from "../components/Modal/Modal";
 
 const DUMMY_PRODUCTS = [
   {
@@ -25,6 +26,7 @@ const DUMMY_PRODUCTS = [
 
 const CartItemTailWind = () => {
   let [total, setTotal] = useState(0);
+  const [cartNumber, setCartNumber] = useContext(CartContext);
   const [cartItems, setCartItems] = useState([]);
   const user = Number(localStorage.getItem("UserID"));
 
@@ -34,7 +36,6 @@ const CartItemTailWind = () => {
         "http://localhost:5000/cart/get-item-by-user",
         { UserID: user }
       );
-      console.log("This is item:", allItemData.data);
       setCartItems(allItemData.data);
       let rat = 0;
       cartItems.map((item) => {
@@ -43,16 +44,13 @@ const CartItemTailWind = () => {
       setTotal(rat);
     };
     allItems();
-  }, []);
-
-  // console.log("This is the items form the databases: ", items);
+  }, [handleAddItem]);
 
   async function handleAddItem(data) {
     const result = await axios.post(
       "http://localhost:5000/cart/add-to-cart",
       data
     );
-    console.log(data);
 
     const allItemData = await axios.post(
       "http://localhost:5000/cart/get-item-by-user",
@@ -71,7 +69,6 @@ const CartItemTailWind = () => {
       "http://localhost:5000/cart/delete-item-from-cart",
       data
     );
-    console.log(result);
 
     const allItemData = await axios.post(
       "http://localhost:5000/cart/get-item-by-user",
@@ -79,6 +76,7 @@ const CartItemTailWind = () => {
     );
 
     setCartItems(allItemData.data);
+    setCartNumber(allItemData.data.length);
     let rat = 0;
     cartItems.map((item) => {
       rat += item.itemQuantity * item.itemPrice;
@@ -211,14 +209,20 @@ const CartItemTailWind = () => {
               <p class="text-sm text-gray-700">including VAT</p>
             </div>
           </div>
-          <button
+          {/* <button
             class="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600"
             onClick={() => {
               handleCheckOut();
             }}
           >
             Check out
-          </button>
+          </button> */}
+          <ModalComponent
+            buttonName={"Check Out"}
+            totalAmount={total}
+            UserID={user}
+            cartItems={cartItems}
+          />
         </div>
       </div>
       <FooterFromTailWind />

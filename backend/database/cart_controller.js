@@ -1,11 +1,14 @@
 import mysql from "mysql2";
+import { config } from "dotenv";
+
+config();
 
 const pool = mysql
   .createPool({
-    host: "127.0.0.1",
-    user: "root",
-    password: "123",
-    database: "foodiee",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
   })
   .promise();
 
@@ -95,12 +98,22 @@ export async function getItemsByUser(userID) {
       userID,
     ]);
     if (results.length > 0) {
-      console.log("Items for user:", results);
       return results;
     } else {
-      console.log("No items found for this user.");
       return [];
     }
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+}
+
+export async function removeUserItems(userID) {
+  try {
+    let [result] = await pool.query("DELETE FROM Cart WHERE UserID = ?", [
+      userID,
+    ]);
+    return "Item deleted Successfully";
   } catch (error) {
     console.error(error);
     return error;
