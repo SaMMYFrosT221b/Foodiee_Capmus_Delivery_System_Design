@@ -29,7 +29,6 @@ function FoodieeHome() {
     const fetchAllItems = async () => {
       try {
         const res = await axios.get("http://localhost:5000/items");
-
         setItemsData(res.data);
       } catch (error) {
         console.log("This is the error", error);

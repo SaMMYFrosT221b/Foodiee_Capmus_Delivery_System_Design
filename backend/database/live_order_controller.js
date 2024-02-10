@@ -67,6 +67,21 @@ export async function showLiveOrder(shopkeeperID) {
   }
 }
 
+export async function getUniqueUsers(shopkeeperID) {
+  try {
+    const [row] = await pool.query(
+      "SELECT DISTINCT UserID FROM LiveOrders WHERE ShopkeeperID = ? ORDER BY UserID ASC",
+      [shopkeeperID]
+    );
+    // console.log(row);
+    return row;
+  } catch (error) {
+    console.error(`An error occurred while fetching the item: ${error}`);
+    // throw error;
+    return "Error Found";
+  }
+}
+
 export async function deleteLiveOrder(shopkeeperID, ItemID, UserID) {
   try {
     cosnt[row] = await pool.query(

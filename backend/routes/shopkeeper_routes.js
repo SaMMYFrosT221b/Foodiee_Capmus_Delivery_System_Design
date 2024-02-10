@@ -9,6 +9,7 @@ import { addItem, showShopkeeperItems } from "../database/items_controllers.js";
 import {
   deleteLiveOrder,
   showLiveOrder,
+  getUniqueUsers,
 } from "../database/live_order_controller.js";
 import { showOrder, updateOrder } from "../database/orders_controller.js";
 
@@ -90,7 +91,11 @@ router.get("/catalogue/:id", async (req, res) => {
 router.get("/live-orders/:id", async (req, res) => {
   const shopkeeperId = req.params.id;
   const result = await showLiveOrder(shopkeeperId);
-  return res.send(result);
+  const uniqueUsers = await getUniqueUsers(shopkeeperId);
+  return res.send({
+    "items":result,
+    "uniqueUsers":uniqueUsers
+  });
 });
 
 // To show all the order shopkeeper has taken till now.
