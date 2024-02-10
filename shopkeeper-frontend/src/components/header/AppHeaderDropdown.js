@@ -27,7 +27,7 @@ import avatar8 from './../../assets/images/avatars/8.jpg'
 
 const AppHeaderDropdown = () => {
 
-  const isLoggedIn = !!localStorage.getItem('token');
+  const isLoggedIn = !localStorage.getItem('token');
 
   if (!isLoggedIn) {
     return (
