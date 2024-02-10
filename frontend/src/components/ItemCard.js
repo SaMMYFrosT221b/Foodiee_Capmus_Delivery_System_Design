@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { CartContext } from "../App";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 
 function ItemCard({
   itemID,
@@ -12,35 +13,24 @@ function ItemCard({
   expectedTime,
   cousineType,
 }) {
-  const { cartNumber, setCartNumber } = useContext(CartContext);
-  const { cartItems } = useContext(CartContext);
-
-  function checkItem(itemComponent) {
-    let rat = false;
-    cartItems.map((item) => {
-      if (item.itemID == itemComponent.itemID) {
-        rat = true;
-      }
-    });
-    if (rat) {
-      return true;
-    }
-    return false;
-  }
-
-  function handleCart(itemComponent) {
-    console.log("Handle cart INVOKED");
-    setCartNumber(cartNumber + 1);
-
-    let check = checkItem(itemComponent);
-    if (!check) {
-      cartItems.push(itemComponent);
-    } else {
-      cartItems.map((item) => {
-        if (item.itemID == itemComponent.itemID) {
-          item.itemQuantity = item.itemQuantity + 1;
-        }
-      });
+  async function handleCart(cartItems) {
+    let obj = {
+      UserID: Number(cartItems.UserID),
+      itemID: cartItems.itemID,
+      ShopkeeperID: cartItems.ShopkeeperID,
+      itemName: cartItems.itemName,
+      itemQuantity: cartItems.itemQuantity,
+      itemPrice: cartItems.itemPrice,
+      operator: "-",
+    };
+    try {
+      const result = await axios.post(
+        "http://localhost:5000/cart/add-to-cart",
+        obj
+      );
+      console.log(result);
+    } catch (error) {
+      console.log("user side error", error);
     }
   }
 
@@ -122,7 +112,6 @@ function ItemCard({
                 UserID: localStorage["UserID"],
                 itemID: itemID,
                 ShopkeeperID: shopkeeperID,
-                OrderStatus: "Pending",
                 itemName: itemName,
                 itemQuantity: 1,
                 itemPrice: price,

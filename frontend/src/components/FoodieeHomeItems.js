@@ -7,6 +7,8 @@ import Filters from "./Filters";
 import FooterFromTailWind from "./FooterFromTailwind";
 import QuoteHome from "./Quote";
 import RestaurantList from "./RestrauntCard";
+import HomeItemCarousel from "../components/Carousel/HomeItemCarousel";
+import { useParams } from "react-router-dom";
 
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -17,21 +19,24 @@ function FoodieeHomeItems() {
   const [items, setItemsData] = useState([]);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  let { id } = useParams();
+  console.log("Thsi id is this:", id);
+
+  useEffect(() => {
     const Token = localStorage.getItem("Token");
     if (!Token) {
       navigate("/login");
-    } else {
-      navigate("/foodiee-home/items");
     }
   }, [navigate]);
 
-  const { cartNumber } = useContext(CartContext);
+  const { cartNumber, setCartNumber } = useContext(CartContext);
 
   useEffect(() => {
     const fetchAllItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/items");
+        const res = await axios.get(
+          `http://localhost:5000/shopkeeper/catalogue/${id}`
+        );
 
         setItemsData(res.data);
       } catch (error) {
@@ -108,7 +113,7 @@ function FoodieeHomeItems() {
   return (
     <>
       <NavbarFromTailWind cartNumber={cartNumber} />
-      <ImageCarousel />
+      <HomeItemCarousel />
       <Filters />
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-20">
         {renderListOfUserNames(items)}

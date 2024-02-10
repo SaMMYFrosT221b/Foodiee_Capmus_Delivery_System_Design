@@ -11,7 +11,6 @@ import RestaurantList from "./RestrauntCard";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { CartContext } from "../App";
 
 function FoodieeHome() {
   const [items, setItemsData] = useState([]);
@@ -25,8 +24,6 @@ function FoodieeHome() {
       navigate("/foodiee-home");
     }
   }, [navigate]);
-
-  const { cartNumber } = useContext(CartContext);
 
   useEffect(() => {
     const fetchAllItems = async () => {
@@ -107,7 +104,7 @@ function FoodieeHome() {
   };
   return (
     <>
-      <NavbarFromTailWind cartNumber={cartNumber} />
+      <NavbarFromTailWind />
       <ImageCarousel />
       <Filters />
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-20">

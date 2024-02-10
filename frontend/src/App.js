@@ -12,10 +12,21 @@ import CartItemTailWind from "./components/CartTailwind";
 import SearchPage from "./pages/Search/SearchPage"; 
 
 export const CartContext = React.createContext();
+let list = localStorage.getItem("cartItems");
+let jsonString = [];
+if (list !== null) {
+  jsonString = JSON.parse(list);
+}
+
+// function YourComponent() {
+//   let { id } = useParams();
+//   return <h1>This is the shopID: {id} </h1>;
+// }
 
 function App() {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(jsonString);
   const [cartNumber, setCartNumber] = useState(0);
+
   return (
     <div className="textCenter flex flex-col">
       <BrowserRouter>
@@ -26,7 +37,11 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/foodiee-home" element={<FoodieeHome />} />
-            <Route path="/foodiee-home/items" element={<FoodieeHomeItems />} />
+            {/* <Route path="/foodiee-home/items" element={<FoodieeHomeItems />} /> */}
+            <Route
+              path="/foodiee-home/items/:id"
+              element={<FoodieeHomeItems />}
+            />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
             <Route path="/search" element={<SearchPage />} />
             <Route
