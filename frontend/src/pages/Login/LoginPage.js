@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import SimpleAlert from "../Alert";
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const differentHostData = {
@@ -51,6 +49,7 @@ function LoginPage() {
       if (responseData.status == 1) {
         localStorage.setItem("Token", responseData.authToken);
         localStorage.setItem("UserID", responseData.userID);
+        localStorage.setItem("UserName", formData.Email);
         console.log("This is the token: ", localStorage.getItem("Token"));
         alert(
           responseData.content +
@@ -58,7 +57,7 @@ function LoginPage() {
             localStorage.getItem("UserID")
         );
         console.log(responseData.content);
-        navigate(`/home`);
+        navigate(`/foodiee-home`);
         // if (formData.UserType === "User") {
         //   window.location.href = `http://localhost:7000/user/${responseData.authToken}`;
         // }
@@ -85,7 +84,7 @@ function LoginPage() {
     if (!Token) {
       navigate("/login");
     } else {
-      navigate("/home");
+      navigate("/foodiee-home");
     }
   }, [navigate]);
 

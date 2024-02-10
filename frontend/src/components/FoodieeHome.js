@@ -6,6 +6,7 @@ import FeedbackForm from "./Feedback";
 import Filters from "./Filters";
 import FooterFromTailWind from "./FooterFromTailwind";
 import QuoteHome from "./Quote";
+import RestaurantList from "./RestrauntCard";
 
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
@@ -109,9 +110,10 @@ function FoodieeHome() {
       <NavbarFromTailWind cartNumber={cartNumber} />
       <ImageCarousel />
       <Filters />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-20">
+      {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-20">
         {renderListOfUserNames(items)}
-      </div>
+      </div> */}
+      <RestaurantList />
       <QuoteHome />
       <FeedbackForm />
       <AppDownload />

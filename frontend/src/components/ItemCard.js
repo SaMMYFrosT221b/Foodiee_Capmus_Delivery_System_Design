@@ -49,7 +49,7 @@ function ItemCard({
       <a href="">
         <img
           class="p-8  rounded-lg"
-          src="3d-casual-life-burger-straight.png"
+          src="/3d-casual-life-burger-straight.png"
           alt="product image"
         />
       </a>
