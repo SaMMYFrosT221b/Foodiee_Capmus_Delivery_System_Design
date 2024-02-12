@@ -112,7 +112,7 @@ const SearchFeature = () => {
         <label for="voice-search" class="sr-only">
           Search
         </label>
-        <div class="relative w-full">
+        <div class="relative w-full md:w-1/2 lg:w-1/3">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg
               class="w-4 h-4 text-gray-500 dark:text-gray-400"
