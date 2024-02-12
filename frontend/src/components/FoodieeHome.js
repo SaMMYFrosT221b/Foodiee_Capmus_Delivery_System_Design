@@ -111,7 +111,7 @@ function FoodieeHome() {
       </div> */}
       <RestaurantList />
       <QuoteHome />
-      <FeedbackForm />
+      {/* <FeedbackForm /> */}
       <AppDownload />
       <FooterFromTailWind />
     </>

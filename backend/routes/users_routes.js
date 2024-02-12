@@ -1,5 +1,9 @@
 import express, { json } from "express";
-import { checkUser, createUser } from "../database/user_controllers.js";
+import {
+  checkUser,
+  createUser,
+  getUser,
+} from "../database/user_controllers.js";
 import { showItems } from "../database/items_controllers.js";
 import { addLiveOrders } from "../database/live_order_controller.js";
 
@@ -76,6 +80,12 @@ router.post("/add-live-orders", async (req, res) => {
   //   TotalAmount: req.body.TotalAmount,
   // };
   // const result = await addLiveOrder(liveOrderData);
+});
+
+router.post("/get-user", async (req, res) => {
+  const userID = req.body.UserID;
+  const result = await getUser(userID);
+  return res.send(result);
 });
 
 export default router;

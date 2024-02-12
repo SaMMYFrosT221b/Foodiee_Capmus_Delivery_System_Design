@@ -1,9 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "../App";
+import axios from "axios";
 
 function NavbarFromTailWind() {
   const navigate = useNavigate();
+
+  const [cartNumber, setCartNumber] = useContext(CartContext);
+
+  const [items, setItemsData] = useState([]);
+  // const [cartNumber, setCartNumber] = useState(0);
   const handleLogOut = () => {
     localStorage.removeItem("Token");
     navigate("/login");
@@ -13,6 +19,24 @@ function NavbarFromTailWind() {
   const handleCartClick = () => {
     console.log("handle cart clikc");
   };
+
+  const user = Number(localStorage.getItem("UserID"));
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios.post(
+          "http://localhost:5000/cart/get-item-by-user",
+          { UserID: user }
+        );
+        setItemsData(result.data);
+        setCartNumber(result.data.length);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <nav class="bg-white border-gray-200 sticky top-0 z-1 ">
@@ -175,7 +199,7 @@ function NavbarFromTailWind() {
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               onClick={handleCartClick}
             >
-              Cart : 0
+              Cart : {cartNumber}
             </button>
           </Link>
         </div>

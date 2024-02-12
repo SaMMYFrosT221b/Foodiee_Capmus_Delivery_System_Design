@@ -213,9 +213,6 @@ const liveOrders = () => {
                 <CPaginationItem>Next</CPaginationItem>
             </CPagination>
         </div>
-
-
-
     )
 }
 

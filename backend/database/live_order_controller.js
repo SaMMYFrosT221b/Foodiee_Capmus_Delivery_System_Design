@@ -1,11 +1,15 @@
 import mysql from "mysql2";
 
+import { config } from "dotenv";
+
+config();
+
 const pool = mysql
   .createPool({
-    host: "127.0.0.1",
-    user: "root",
-    password: "anant",
-    database: "foodiee",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
   })
   .promise();
 
@@ -13,13 +17,13 @@ const pool = mysql
 export async function addLiveOrder(liveOrder) {
     let sql =
       "INSERT INTO LiveOrders (ItemID, UserID, ShopkeeperID, OrderStatus, TotalQuantity, TotalAmount) VALUES (?, ?, ?, ?, ?, ?)";
-    let data = [
-      liveOrder.ItemID,
-      liveOrder.UserID,
-      liveOrder.ShopkeeperID,
-      liveOrder.OrderStatus,
-      liveOrder.TotalQuantity,
-      liveOrder.TotalAmount,
+    const data = [
+      liveOrderDetails.itemID,
+      liveOrderDetails.UserID,
+      liveOrderDetails.ShopkeeperID,
+      "Pending",
+      liveOrderDetails.itemQuantity,
+      liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
     ];
 
     try {
@@ -92,6 +96,29 @@ export async function deleteLiveOrder(shopkeeperID, ItemID, UserID) {
       return "Live Order Deleted";
     } else {
       return "Live Order Does not exist";
+    }
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+}
+
+export async function showLiverOrdersReadyToDeliver() {
+  try {
+    const result = await pool.query(
+      "SELECT Items.ItemName,Shopkeepers.ShopName,Users.UserName,LiveOrders.* FROM LiveOrders,Items,Shopkeepers,Users WHERE LiveOrders.UserID=Users.UserID and LiveOrders.ShopKeeperID=Shopkeepers.ShopKeeperID and Items.ItemID=LiveOrders.ITemID and LiveOrders.OrderStatus = ?",
+      ['OrderReadyToDeliver']
+    );
+    const userDistinct = await pool.query(
+      "SELECT DISTINCT UserID FROM LiveOrders WHERE OrderStatus = ?",
+      ['OrderReadyToDeliver']
+    );
+    console.log(userDistinct[0])
+    if(result){
+      return [{"items": result[0], "distinctUser": userDistinct[0]}];
+   
+    } else {
+      return [];
     }
   } catch (error) {
     console.log(error);

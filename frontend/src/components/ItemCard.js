@@ -13,6 +13,9 @@ function ItemCard({
   expectedTime,
   cousineType,
 }) {
+  const [cartNumber, setCartNumber] = useContext(CartContext);
+  const user = Number(localStorage.getItem("UserID"));
+
   async function handleCart(cartItems) {
     let obj = {
       UserID: Number(cartItems.UserID),
@@ -28,7 +31,11 @@ function ItemCard({
         "http://localhost:5000/cart/add-to-cart",
         obj
       );
-      console.log(result);
+      const cartItems = await axios.post(
+        "http://localhost:5000/cart/get-item-by-user",
+        { UserID: user }
+      );
+      setCartNumber(cartItems.data.length);
     } catch (error) {
       console.log("user side error", error);
     }
