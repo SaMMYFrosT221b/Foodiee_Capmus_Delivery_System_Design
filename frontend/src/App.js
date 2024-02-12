@@ -9,7 +9,11 @@ import ProfilleAvatar from "./components/ProfileAvatar";
 import FoodieeHome from "./components/FoodieeHome";
 import FoodieeHomeItems from "./components/FoodieeHomeItems";
 import CartItemTailWind from "./components/CartTailwind";
+<<<<<<< HEAD
 import SearchPage from "./pages/Search/SearchPage"; 
+=======
+import SearchFeature from "./components/SearchBar/SearchingBar";
+>>>>>>> c60a0aed5f193c7b7f00a88efd3f360fffa17a29
 
 export const CartContext = React.createContext();
 
@@ -33,7 +37,8 @@ function App() {
               element={<FoodieeHomeItems />}
             />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
-            <Route path="/search" element={<SearchPage />} />
+            <Route path="/search" element={<SearchFeature />} />
+
             <Route
               path="/foodiee-home/user/:userID/profile"
               element={<ProfilleAvatar />}

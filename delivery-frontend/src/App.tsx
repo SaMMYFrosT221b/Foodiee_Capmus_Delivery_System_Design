@@ -82,7 +82,7 @@ function App() {
           path="/tables"
           element={
             <>
-              <PageTitle title="Tables " />
+              <PageTitle title="Live orders " />
               <Tables />
             </>
           }
