@@ -8,6 +8,7 @@ import ProfilleAvatar from "./components/ProfileAvatar";
 import FoodieeHome from "./components/FoodieeHome";
 import FoodieeHomeItems from "./components/FoodieeHomeItems";
 import CartItemTailWind from "./components/CartTailwind";
+import SearchFeature from "./components/SearchBar/SearchingBar";
 
 export const CartContext = React.createContext();
 
@@ -31,6 +32,8 @@ function App() {
               element={<FoodieeHomeItems />}
             />
             <Route path="/foodiee-home/cart" element={<CartItemTailWind />} />
+            <Route path="/search" element={<SearchFeature />} />
+
             <Route
               path="/foodiee-home/user/:userID/profile"
               element={<ProfilleAvatar />}
