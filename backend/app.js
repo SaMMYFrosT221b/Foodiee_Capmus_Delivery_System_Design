@@ -29,51 +29,8 @@ app.use("/user", userRoutes);
 app.use("/shopkeeper", shopkeeperRoutes);
 app.use("/deliveryboy", deliveryRoutes);
 
-// Catch-all route
-// app.use((req, res, next) => {
-//   res.status(404).send("Page Not Found");
-// });
-
-app.get("/items", async (req, res) => {
-  const result = await showItems();
-  res.json(result);
-});
-
-/*-------------------------------------------------------------------------------------------------------------- */
-app.get("/notes", async (req, res) => {
-  const r = await getNotes();
-  // console.log(r);
-  const result = r;
-  res.json(result);
-});
-
-app.get("/notes/:id", async (req, res) => {
-  const id = req.params.id;
-  const note = await getNote(id);
-  res.send(note);
-});
-
-app.post("/notes", async (req, res) => {
-  const { title, contents } = req.body;
-  console.log(title);
-  console.log(contents);
-  const note = await createNote(title, contents);
-  res.send(note);
-});
-
-app.delete("/notes/:id", async (req, res) => {
-  const id = req.params.id;
-  const note = await deleteNote(id);
-  res.send(note);
-});
-
-app.put("/notes/:id", async (req, res) => {
-  const id = req.params.id;
-  const { title, contents } = req.body;
-  const note = await updateNote(id, title, contents);
-  res.send(note);
-});
-
 app.listen(PORT, () => {
   console.log(`Server is running at ${PORT}`);
 });
+
+export default app;
