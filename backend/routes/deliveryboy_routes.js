@@ -3,6 +3,8 @@ import {
   checkDeliveryBoy,
   createDeliveryBoy,
 } from "../database/deliveryboy_controllers.js";
+import {showLiverOrdersReadyToDeliver}
+from "../database/live_order_controller.js"
 
 const router = express.Router();
 
@@ -31,4 +33,10 @@ router.post("/signup", async (req, res) => {
   return res.send(result);
 });
 
+// live-delivery orders
+router.get("/live-delivery-orders", async (req, res) => {
+  const result = await showLiverOrdersReadyToDeliver();
+  // console.log("We got",result[0]);
+  return res.send(result);
+});
 export default router;

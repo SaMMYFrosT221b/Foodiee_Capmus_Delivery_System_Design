@@ -2,6 +2,50 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function ShopkeeperSignupPage() {
+  const [formData, setFormData] = useState({
+    Name: "",
+    ShopUserName: "",
+    Password: "",
+    Email: "",
+    PhoneNo: "",
+    ShopName: "",
+    ShopNo: "",
+    BankName: "",
+    AccountNo: "",
+    GSTNo: "",
+    GovIDType: "",
+    GovID: "",
+    AddressLine1: "",
+    AddressLine2: "",
+    City: "",
+    State: "",
+    PostalCode: "",
+    Country: "",
+  });
+  const handleChange = (event) => {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log("Button Clicked");
+
+    try {
+      const response = await fetch(`http://localhost:5000/shopkeeper/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log("this is response",response);
+      console.log(formData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
@@ -31,94 +75,136 @@ function ShopkeeperSignupPage() {
                 <div className="mx-auto max-w-xs">
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    type="text"
+                    type="text" 
+                    name="Name"
+                    onChange={handleChange}
                     placeholder="Name"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="ShopUserName"
+                    onChange={handleChange}
                     placeholder="Username"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="password"
+                    name="Password"
+                    onChange={handleChange}
                     placeholder="Password"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    onInput={(e) => {
-                      if (e.target.value.length > 10) {
-                        e.target.value = e.target.value.slice(0, 10);
-                      }
-                    }}
+                    type="email"
+                    name="Email"
+                    onChange={handleChange}
+                    placeholder="Email"
+                  />
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="number"
+                    name="PhoneNo"
+                    onChange={handleChange}
                     placeholder="Phone Number"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    onInput={(e) => {
-                      if (e.target.value.length > 3) {
-                        e.target.value = e.target.value.slice(0, 3);
-                      }
-                    }}
+                    name="ShopNo"
+                    onChange={handleChange}
                     type="number"
                     placeholder="Shop No"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="ShopName"
+                    onChange={handleChange}
                     placeholder="Shop Name"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="BankName"
+                    onChange={handleChange}
                     placeholder="Bank Name"
                   />
                   <input
                     className="w-full mx-1 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    onInput={(e) =>{
-                        if(e.target.value.length > 17){
-                            e.target.value = e.target.value.slice(0,17);
-                        }else if(e.target.value <= 0){
-                            e.target.value = null;
-                        }
-                    }}
+          
                     type="number"
+                    name="AccountNo"
+                    onChange={handleChange}
                     placeholder="Account No."
                   />{" "}
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                    onInput={(e) => {
-                      if (e.target.value.length > 15) {
-                        e.target.value = e.target.value.slice(0, 15);
-                      }
-                    }}
+                    name="GSTNo"
+                    onChange={handleChange}
                     type="number"
                     placeholder="GST No."
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    name="GovIDType"
+                    onChange={handleChange}
                     type="text"
+                    placeholder="GovIDType: 'Aadhar', 'PAN', 'Driving License', 'Voter ID' "
+                  />
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    name="GovID"
+                    onChange={handleChange}
+                    type="text"
+                    placeholder="GovID"
+                  />
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    type="text"
+                    name="AddressLine1"
+                    onChange={handleChange}
                     placeholder="Address line 1"
                   />
                   <input
                     className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                     type="text"
+                    name="AddressLine2"
+                    onChange={handleChange}
                     placeholder="Address line 2"
                   />
                   <div className="flex flex-row justify-between">
                     <input
                       className="w-4/6 mx-1 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       type="text"
+                      name="City"
+                      onChange={handleChange}
                       placeholder="City"
                     />{" "}
                     <input
                       className="w-4/6 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
                       type="text"
+                      name="State"
+                      onChange={handleChange}
                       placeholder="State"
                     />
+                    </div>
+                    <div className="flex flex-row justify-between">
+                    <input
+                      className="w-4/6 px-8 py-4 mx-2 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      type="text"
+                      name="PostalCode"
+                      onChange={handleChange}
+                      placeholder="PostalCode"
+                    />
+                    <input
+                      className="w-4/6 px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      type="text"
+                      name="Country"
+                      onChange={handleChange}
+                      placeholder="Country"
+                    />
                   </div>
-                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                  <button className="mt-5 tracking-wide font-semibold bg-indigo-500 text-gray-100 w-full py-4 rounded-lg hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none" onClick={handleSubmit}>
                     <svg
                       className="w-6 h-6 -ml-2"
                       fill="none"
