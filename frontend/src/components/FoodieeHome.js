@@ -28,7 +28,7 @@ function FoodieeHome() {
   useEffect(() => {
     const fetchAllItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/items");
+        const res = await axios.get(`${process.env.REACT_APP_HOST_URL}/items`);
         setItemsData(res.data);
       } catch (error) {
         console.log("This is the error", error);
@@ -36,57 +36,6 @@ function FoodieeHome() {
     };
     fetchAllItems();
   }, []);
-
-  // const itemData = [
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  //   {
-  //     url: "3d-casual-life-burger-straight.png",
-  //     itemName: "Burger",
-  //     description: "This is junk food dont eat it.",
-  //     price: "50",
-  //     expectedTime: "10",
-  //     cousineType: "Snacks",
-  //   },
-  // ];
 
   const renderListOfUserNames = (itemData) => {
     return itemData.map((item, index) => (

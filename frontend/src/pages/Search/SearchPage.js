@@ -20,7 +20,6 @@ const longestCommonSubsequence = (text1, text2) => {
   return dp[m][n];
 };
 
-
 const SearchPage = () => {
   const [items, setItems] = useState([]);
   const [searchText, setSearchText] = useState("");
@@ -29,7 +28,7 @@ const SearchPage = () => {
   useEffect(() => {
     const fetchAllItems = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/items");
+        const res = await axios.get(`${process.env.REACT_APP_HOST_URL}/items`);
         setItems(res.data);
       } catch (error) {
         console.log(error);
@@ -62,7 +61,8 @@ const SearchPage = () => {
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button onClick={handleButtonClick}>Search </button> {/* Button added */}
+        <button onClick={handleButtonClick}>Search </button>{" "}
+        {/* Button added */}
         {buttonClicked && ( // Conditionally render based on button click
           <div>
             <p>Top 10 most similar items:</p>
@@ -81,4 +81,3 @@ const SearchPage = () => {
 };
 
 export default SearchPage;
-

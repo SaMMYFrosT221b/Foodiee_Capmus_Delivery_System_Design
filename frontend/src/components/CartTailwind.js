@@ -33,7 +33,7 @@ const CartItemTailWind = () => {
   useEffect(() => {
     const allItems = async () => {
       const allItemData = await axios.post(
-        "http://localhost:5000/cart/get-item-by-user",
+        `${process.env.REACT_APP_HOST_URL}/cart/get-item-by-user`,
         { UserID: user }
       );
       setCartItems(allItemData.data);
@@ -48,12 +48,12 @@ const CartItemTailWind = () => {
 
   async function handleAddItem(data) {
     const result = await axios.post(
-      "http://localhost:5000/cart/add-to-cart",
+      `${process.env.REACT_APP_HOST_URL}/cart/add-to-cart`,
       data
     );
 
     const allItemData = await axios.post(
-      "http://localhost:5000/cart/get-item-by-user",
+      `${process.env.REACT_APP_HOST_URL}/cart/get-item-by-user`,
       { UserID: user }
     );
     setCartItems(allItemData.data);
@@ -66,12 +66,12 @@ const CartItemTailWind = () => {
 
   async function onRemove(data) {
     const result = await axios.post(
-      "http://localhost:5000/cart/delete-item-from-cart",
+      `${process.env.REACT_APP_HOST_URL}/cart/delete-item-from-cart`,
       data
     );
 
     const allItemData = await axios.post(
-      "http://localhost:5000/cart/get-item-by-user",
+      `${process.env.REACT_APP_HOST_URL}/cart/get-item-by-user`,
       { UserID: user }
     );
 

@@ -12,9 +12,12 @@ function ModalComponent({ buttonName, totalAmount, UserID, cartItems }) {
 
   useEffect(() => {
     const fetchUserAddress = async () => {
-      const result = await axios.post(`http://localhost:5000/user/get-user`, {
-        UserID: UserID,
-      });
+      const result = await axios.post(
+        `${process.env.REACT_APP_HOST_URL}/user/get-user`,
+        {
+          UserID: UserID,
+        }
+      );
       const obj = {
         Name: result.data.Name,
         Addre1: result.data.AddressLine1,
@@ -31,11 +34,11 @@ function ModalComponent({ buttonName, totalAmount, UserID, cartItems }) {
   async function handlePay() {
     try {
       const result = await axios.post(
-        "http://localhost:5000/cart/delete-user-items",
+        `${process.env.REACT_APP_HOST_URL}/cart/delete-user-items`,
         { UserID: UserID }
       );
       const addLiveOrder = await axios.post(
-        "http://localhost:5000/user/add-live-orders",
+        `${process.env.REACT_APP_HOST_URL}/user/add-live-orders`,
         cartItems
       );
       setCartNumber(0);

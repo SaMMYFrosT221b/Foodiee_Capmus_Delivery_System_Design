@@ -26,7 +26,7 @@ function NavbarFromTailWind() {
     const fetchData = async () => {
       try {
         const result = await axios.post(
-          "http://localhost:5000/cart/get-item-by-user",
+          `${process.env.REACT_APP_HOST_URL}/cart/get-item-by-user`,
           { UserID: user }
         );
         setItemsData(result.data);

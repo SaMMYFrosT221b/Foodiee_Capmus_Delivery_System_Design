@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const differentHostData = {
-    UserHost: "http://localhost:5000",
+    UserHost: `${process.env.REACT_APP_HOST_URL}`,
     ShopkeeperHost: "http://localhost:6000",
     DeliveryBoyHost: "http://localhost:7000",
   };
@@ -31,7 +31,7 @@ function LoginPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/${
+        `${process.env.REACT_APP_HOST_URL}/${
           routesMappingOfUSerTypes[formData.UserType]
         }/login`,
         {
@@ -43,7 +43,7 @@ function LoginPage() {
         }
       );
 
-      // const responseData = await axios.post("http://localhost:5000/rat", formData);
+      // const responseData = await axios.post("${process.env.REACT_APP_HOST_URL}/rat", formData);
       const responseData = await response.json();
       console.log("Response from server:", responseData);
       if (responseData.status == 1) {

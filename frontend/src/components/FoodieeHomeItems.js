@@ -35,7 +35,7 @@ function FoodieeHomeItems() {
     const fetchAllItems = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/shopkeeper/catalogue/${id}`
+          `${process.env.REACT_APP_HOST_URL}/shopkeeper/catalogue/${id}`
         );
 
         setItemsData(res.data);
@@ -53,7 +53,7 @@ function FoodieeHomeItems() {
   const handleSearch = async () => {
     // Simulate fetching data from a backend
     const res = await axios.get(
-      `http://localhost:5000/shopkeeper/catalogue/${id}`
+      `${process.env.REACT_APP_HOST_URL}/shopkeeper/catalogue/${id}`
     );
 
     setItemsData(res.data);

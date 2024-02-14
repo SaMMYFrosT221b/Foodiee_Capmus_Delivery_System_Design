@@ -28,11 +28,11 @@ function ItemCard({
     };
     try {
       const result = await axios.post(
-        "http://localhost:5000/cart/add-to-cart",
+        `${process.env.REACT_APP_HOST_URL}/cart/add-to-cart`,
         obj
       );
       const cartItems = await axios.post(
-        "http://localhost:5000/cart/get-item-by-user",
+        `${process.env.REACT_APP_HOST_URL}/cart/get-item-by-user`,
         { UserID: user }
       );
       setCartNumber(cartItems.data.length);

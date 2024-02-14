@@ -22,16 +22,22 @@ function UserSignupPage() {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:5000/user/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_HOST_URL}/user/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
 
-      console.log(response);
-      console.log(formData);
+      console.log(
+        "This is the response from the SignUP from the backend",
+        response
+      );
+      console.log("This is the form data", formData);
     } catch (err) {
       console.error(err);
     }

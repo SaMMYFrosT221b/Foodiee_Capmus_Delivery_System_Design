@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Signup from "./pages/SignupForm";
 import LoginPage from "./pages/Login/LoginPage";
-
 import React from "react";
 import { useState } from "react";
 import ProfilleAvatar from "./components/ProfileAvatar";
@@ -17,6 +16,10 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [cartNumber, setCartNumber] = useState(0);
 
+  console.log(
+    "This is the envirnment varialbe",
+    process.env.REACT_APP_HOST_URL
+  );
   return (
     <div className="textCenter flex flex-col">
       <BrowserRouter>

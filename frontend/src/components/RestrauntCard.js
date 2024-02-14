@@ -65,7 +65,7 @@ function RestaurantList() {
   useEffect(() => {
     const fectReatraunetData = async () => {
       const restaurants = await axios.get(
-        "http://localhost:5000/shopkeeper/get-restaurants"
+        `${process.env.REACT_APP_HOST_URL}/shopkeeper/get-restaurants`
       );
       let updateRes = restaurants.data.map((shop, index) => {
         let obj = {
@@ -87,7 +87,7 @@ function RestaurantList() {
   const handleSearch = async () => {
     // Simulate fetching data from a backend
     const restaurants = await axios.get(
-      "http://localhost:5000/shopkeeper/get-restaurants"
+      `${process.env.REACT_APP_HOST_URL}/shopkeeper/get-restaurants`
     );
     let updateRes = restaurants.data.map((shop, index) => {
       let obj = {
