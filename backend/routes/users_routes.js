@@ -50,7 +50,7 @@ router.post("/place-order", async (req, res) => {
     TotalAmount: req.body.TotalAmount,
   };
 
-  const result = await addLiveOrder(itemData);
+  const result = await addLiveOrders(itemData);
   return res.send(result);
 });
 
@@ -68,18 +68,9 @@ router.post("/add-live-orders", async (req, res) => {
   }
 
   for (let i = 0; i < liveOrderData.length; i++) {
-    const result = await addLiveOrder(liveOrderData[i]);
+    const result = await addLiveOrders(liveOrderData[i]);
   }
   return res.send("add-live-order INVOKED");
-  // const liveOrderData = {
-  //   ItemID: req.body.ItemID,
-  //   UserID: req.body.UserID,
-  //   ShopkeeperID: req.body.ShopkeeperID,
-  //   OrderStatus: req.body.OrderStatus,
-  //   TotalQuantity: req.body.TotalQuantity,
-  //   TotalAmount: req.body.TotalAmount,
-  // };
-  // const result = await addLiveOrder(liveOrderData);
 });
 
 router.post("/get-user", async (req, res) => {
