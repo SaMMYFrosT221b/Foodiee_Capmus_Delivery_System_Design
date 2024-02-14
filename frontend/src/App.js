@@ -24,9 +24,11 @@ function App() {
           value={[cartItems, setCartItems, cartNumber, setCartNumber]}
         >
           <Routes>
+            <Route path="/" element={<FoodieeHome />} />
+            <Route path="/foodiee-home" element={<FoodieeHome />} />
+
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<Signup />} />
-            <Route path="/foodiee-home" element={<FoodieeHome />} />
             {/* <Route path="/foodiee-home/items" element={<FoodieeHomeItems />} /> */}
             <Route
               path="/foodiee-home/items/:id"
@@ -40,7 +42,6 @@ function App() {
               element={<ProfilleAvatar />}
             />
           </Routes>
-
         </CartContext.Provider>
       </BrowserRouter>{" "}
     </div>

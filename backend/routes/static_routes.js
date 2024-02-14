@@ -1,12 +1,12 @@
-import express from 'express';
+import express from "express";
 
 const router = express.Router();
 
-router.get('/',(req,res)=>{
-    return res.send('This is home page');
-})
+router.get("/", async (req, res) => {
+  return res.send("This is home page");
+});
 
-router.get('/signup', (req, res) => {
+router.get("/signup", async (req, res) => {
   return res.send("This is signup Page");
 });
 
