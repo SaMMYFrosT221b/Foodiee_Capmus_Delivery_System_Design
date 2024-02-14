@@ -23,6 +23,8 @@ function App() {
           value={[cartItems, setCartItems, cartNumber, setCartNumber]}
         >
           <Routes>
+            <Route path="/" element={<h1>This is home page.</h1>} />
+
             <Route path="/login" element={<LoginPage />} />
             <Route path="/sign-up" element={<Signup />} />
             <Route path="/foodiee-home" element={<FoodieeHome />} />
