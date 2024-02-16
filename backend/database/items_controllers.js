@@ -14,6 +14,38 @@ const pool = mysql
   })
   .promise();
 
+// export async function addItem(itemData) {
+//   let sql =
+//     "INSERT INTO Items (ShopkeeperID, ItemName, Description, Price, ImageURL, ExpectedTime, CousineType) VALUES (?, ?, ?, ?, ?, ?, ?)";
+//   let data = [
+//     itemData.ShopkeeperID,
+//     itemData.ItemName,
+//     itemData.Description,
+//     itemData.Price,
+//     itemData.ImageURL,
+//     itemData.ExpectedTime,
+//     itemData.CousineType,
+//   ];
+
+//   try {
+//     const [checkIfAlready] = await pool.query(
+//       "SELECT * FROM Items WHERE ItemName = ?",
+//       [itemData.ItemName]
+//     );
+//     // If there is at least one row, the item already exists
+//     if (checkIfAlready.length > 0) {
+//       return [403, "Item already exists"];
+//     }
+//     const [row] = await pool.query(sql, data);
+//     // const result = await showItem(row.insertId);
+//     return [200, `Item added successfully with ID ${row.insertId}`];
+//     // return row;
+//   } catch (error) {
+//     console.error(`An error occurred while adding the item: ${error}`);
+//     return [400, error];
+//   }
+// }
+
 export async function addItem(itemData) {
   let sql =
     "INSERT INTO Items (ShopkeeperID, ItemName, Description, Price, ImageURL, ExpectedTime, CousineType) VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -29,8 +61,8 @@ export async function addItem(itemData) {
 
   try {
     const [checkIfAlready] = await pool.query(
-      "SELECT * FROM Items WHERE ItemName = ?",
-      [itemData.ItemName]
+      "SELECT * FROM Items WHERE ItemName = ? AND ShopkeeperID=?",
+      [itemData.ItemName, itemData.ShopkeeperID]
     );
     // If there is at least one row, the item already exists
     if (checkIfAlready.length > 0) {

@@ -60,7 +60,7 @@ router.get("/items", async (req, res) => {
 });
 
 router.post("/add-live-orders", async (req, res) => {
-  console.log("This is cart req body", typeof req.body);
+  console.log("This is cart req body", req.body);
   const liveOrderData = req.body;
   // console.log(liveOrderData.length);
   if (liveOrderData.length == 0) {

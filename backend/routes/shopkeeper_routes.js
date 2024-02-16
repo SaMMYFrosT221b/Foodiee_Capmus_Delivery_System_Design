@@ -93,11 +93,10 @@ router.get("/live-orders/:id", async (req, res) => {
   const result = await showLiveOrder(shopkeeperId);
   const uniqueUsers = await getUniqueUsers(shopkeeperId);
   return res.send({
-    "items":result,
-    "uniqueUsers":uniqueUsers
+    items: result,
+    uniqueUsers: uniqueUsers,
   });
 });
-
 
 // To show all the order shopkeeper has taken till now.
 router.get("/orders-taken/:id", async (req, res) => {
@@ -110,9 +109,9 @@ router.get("/orders-taken/:id", async (req, res) => {
 });
 
 // To show all the order shopkeeper has taken till now.
-router.put("/update-order-status/:id", async (req, res) => {
-  const shopkeeperId = req.params.id;
-  const result = await updateOrder(shopkeeperId, req.body);
+router.put("/update-order-status/", async (req, res) => {
+  console.log(req.body);
+  const result = await updateOrder(req.body);
   if (result.length == 0) {
     return res.send("No orders Updated!");
   }

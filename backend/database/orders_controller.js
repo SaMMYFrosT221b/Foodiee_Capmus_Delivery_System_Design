@@ -33,10 +33,10 @@ export async function showOrder(shopkeeperID) {
   return row;
 }
 
-export async function updateOrder(shopkeeperID, item) {
+export async function updateOrder(item) {
   let sql =
-    "UPDATE LiveOrders SET orderStatus = ? WHERE ShopkeeperID = ? AND ItemID = ? AND UserID = ?";
-  let data = [item.orderStatus, item.ShopkeeperID, item.itemID, item.USERID];
+    "UPDATE LiveOrders SET orderStatus = ? WHERE ShopkeeperID = ? AND UserID = ?";
+  let data = [item.orderStatus, item.ShopkeeperID, item.USERID];
 
   const [row] = await pool.query(sql, data);
   return row;

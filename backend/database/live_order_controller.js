@@ -38,13 +38,15 @@ export async function addLiveOrder(liveOrderDetails) {
 }
 export async function addLiveOrders(liveOrderDetails) {
   try {
+    console.log("Adding the items from backend");
+    console.log(liveOrderDetails);
     const sql =
       "INSERT INTO LiveOrders (ItemID,UserID,ShopkeeperID,OrderStatus,TotalQuantity,TotalAmount) VALUES  (?,?,?,?,?,?)";
     const data = [
       liveOrderDetails.itemID,
       liveOrderDetails.UserID,
       liveOrderDetails.ShopkeeperID,
-      liveOrderDetails.OrderStatus,
+      "Pending",
       liveOrderDetails.itemQuantity,
       liveOrderDetails.itemPrice * liveOrderDetails.itemQuantity,
     ];

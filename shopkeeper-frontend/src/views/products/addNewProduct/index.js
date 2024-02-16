@@ -20,8 +20,9 @@ import axios from 'axios'
 import Toast_alert from '../alert/alert'
 
 const addNewProduct = () => {
+  const shopID = localStorage.getItem('shopID') ? localStorage.getItem('shopID') : 1
   const [credentials, setCredentials] = useState({
-    ShopkeeperID: 1,
+    ShopkeeperID: shopID,
     ItemName: 'Jalebi',
     Description: 'I ate Pasta today at 6pm for snakcs, Rat loves pasta.',
     Price: 40.0,
@@ -34,11 +35,15 @@ const addNewProduct = () => {
     e.preventDefault()
     console.log('Here we check', credentials)
     try {
-      const res = await axios.post('http://localhost:5000/shopkeeper/add-item', credentials, {
-        headers: {
-          'Content-Type': 'application/json',
+      const res = await axios.post(
+        `${process.env.REACT_APP_BACKEND_HOST_URL}/shopkeeper/add-item`,
+        credentials,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      })
+      )
       console.log(res)
       if (res.status == 200) {
         console.log('ehllo')
@@ -46,14 +51,6 @@ const addNewProduct = () => {
           alert: 'Success',
           time: 'Less than a minute ago',
           message: 'Congrats! Your Item is added ,You can switch to allProduct to view.',
-        })
-      }
-      if (res.status == 403) {
-        console.log('ehllo')
-        setalert({
-          alert: 'Try Again.',
-          time: 'Less than a minute ago',
-          message: 'Item Already Exist.',
         })
       }
     } catch (error) {

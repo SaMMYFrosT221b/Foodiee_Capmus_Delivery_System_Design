@@ -33,13 +33,14 @@ function ModalComponent({ buttonName, totalAmount, UserID, cartItems }) {
 
   async function handlePay() {
     try {
-      const result = await axios.post(
-        `${process.env.REACT_APP_HOST_URL}/cart/delete-user-items`,
-        { UserID: UserID }
-      );
+      console.log("Live order Triggered");
       const addLiveOrder = await axios.post(
         `${process.env.REACT_APP_HOST_URL}/user/add-live-orders`,
         cartItems
+      );
+      const result = await axios.post(
+        `${process.env.REACT_APP_HOST_URL}/cart/delete-user-items`,
+        { UserID: UserID }
       );
       setCartNumber(0);
       console.log("Order has placed Successfully!");
