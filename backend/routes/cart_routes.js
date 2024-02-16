@@ -8,6 +8,10 @@ import {
 
 const router = express.Router();
 
+router.get("/", (req, res) => {
+  res.send("This is the cart routes.");
+});
+
 router.post("/add-to-cart", async (req, res) => {
   const cartData = req.body;
   const result = await addToCart(cartData);

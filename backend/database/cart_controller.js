@@ -3,12 +3,21 @@ import { config } from "dotenv";
 
 config();
 
+// const pool = mysql
+//   .createPool({
+//     host: process.env.DB_HOST,
+//     user: process.env.DB_USER,
+//     password: process.env.DB_PASSWORD,
+//     database: process.env.DB_NAME,
+//   })
+//   .promise();
+
 const pool = mysql
   .createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: "localhost",
+    user: "root",
+    password: "123",
+    database: "foodiee",
   })
   .promise();
 
@@ -120,14 +129,14 @@ export async function removeUserItems(userID) {
   }
 }
 
-// const data = {
-//   UserID: 12,
-//   itemID: 2,
-//   ShopkeeperID: 2,
-//   itemName: "Maggiee",
-//   itemQuantity: 10,
-//   itemPrice: 10.23,
-// };
+const data = {
+  UserID: 12,
+  itemID: 1,
+  ShopkeeperID: 2,
+  itemName: "Maggiee",
+  itemQuantity: 10,
+  itemPrice: 10.23,
+};
 
-// const result = await deleteItem(12, 2);
-// console.log(result);
+const result = await addToCart(data);
+console.log(result);

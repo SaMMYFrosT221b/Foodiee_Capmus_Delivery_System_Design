@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function UserSignupPage() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     username: "",
@@ -32,6 +33,8 @@ function UserSignupPage() {
           body: JSON.stringify(formData),
         }
       );
+      alert("SignUp successfull");
+      navigate(`/login`);
 
       console.log(
         "This is the response from the SignUP from the backend",
