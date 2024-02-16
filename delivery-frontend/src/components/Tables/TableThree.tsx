@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 
 const TableThree = () => {
@@ -11,19 +12,19 @@ const TableThree = () => {
       try {
         // Fetch data from the new URL
         const response = await fetch(
-          `http://localhost:5000/deliveryboy/live-delivery-orders`,
+          `https://chapel-releases-revolution-venues.trycloudflare.com/deliveryboy/live-delivery-orders`,
         );
+
+        console.log('response ', response);
 
         if (!response.ok) {
           // Handle non-successful response (optional)
           console.error(`Error fetching data: ${response.statusText}`);
           return;
         }
-
-        // Assuming response.json() returns the data you need
         const fetched_data = await response.json();
 
-        console.log('Data recieved is : ', fetched_data[0]);
+        console.log('Data recieved is : ', fetched_data);
         setdata(fetched_data[0]['items']);
         setuniqeUSERID(fetched_data[0]['distinctUser']);
       } catch (error) {
